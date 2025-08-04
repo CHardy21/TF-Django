@@ -1,0 +1,40 @@
+{% load static %}
+
+<div class="sidebar">
+  <div class="user-info" style="margin-bottom: 20px;">
+    {% if user.avatar %}
+      <img src="{{ user.avatar.url }}" style="width: 60px; height: 60px; border-radius: 50%;" />
+    {% else %}
+      <img src="{% static 'images/default_avatar.png' %}" alt="Avatar por defecto" style="width: 60px; height: 60px; border-radius: 50%;" />
+    {% endif %}
+
+    <p>{{ user.get_full_name }}</p>
+
+    <a href="/" class="btn" title="Ver sitio">
+      <i class="bi bi-globe"></i>
+      <span>Ver sitio</span>
+    </a>
+  </div>
+  <div>
+    <h3>🔗 Menú</h3>
+    <a href="{% url 'dashboard:dashboard_publicaciones' %}" title="Mis Publicaciones">
+      <i class="bi bi-journal-text"></i>
+      <span>Mis Publicaciones</span>
+    </a>
+
+    <a href="{% url 'dashboard:dashboard_estadisticas' %}" title="Estadísticas">
+      <i class="bi bi-bar-chart-line"></i>
+      <span>Estadísticas</span>
+    </a>
+
+    <a href="{% url 'dashboard:dashboard_top' %}" title="Top Publicaciones">
+      <i class="bi bi-trophy"></i>
+      <span>Top Publicaciones</span>
+    </a>
+
+    <a href="{% url 'create_post' %}" class="load-view" title="Nueva Publicación">
+      <i class="bi bi-plus-circle"></i>
+      <span>Nueva Publicación</span>
+    </a>
+  </div>
+</div>

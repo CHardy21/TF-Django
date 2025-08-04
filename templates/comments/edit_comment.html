@@ -1,0 +1,7 @@
+<h2>Editar Comentario</h2>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="content">{{ comment.content }}</textarea>
+    <br>
+    <button type="submit">Guardar</button>
+</form>

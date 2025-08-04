@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-12 col-lg-12 px-3">
+      {% include 'posts/includes/post_detail.html' %}
+      {% include 'posts/includes/related_posts.html' %}
+      <hr>
+      <section class="mb-4">
+        <h4 class="mb-3">Comentarios</h4>
+        {% if comments %}
+        {% for comment in comments %}
+        {% include 'posts/includes/comment_item.html' %}
+        {% endfor %}
+        {% else %}
+        <p class="text-muted">🦗 Todavía no hay comentarios. ¡Sé el primero en comentar!</p>
+        {% endif %}
+      </section>
+
+      <section>
+        {% if user.is_authenticated %}
+        {% include 'posts/includes/comment_form.html' %}
+        {% else %}
+        <p>
+          🔐 Solo los usuarios registrados pueden comentar. <a href="{% url 'user:login' %}">Iniciá sesión</a> para
+          participar.
+        </p>
+        {% endif %}
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

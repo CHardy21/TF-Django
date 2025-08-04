@@ -1,0 +1,29 @@
+{% load truncate_filters %}
+<div class="row">
+  {% for post in todos_los_posts %}
+    <div class="col-12 col-lg-6 mb-3">
+      <div class="card shadow-sm position-relative w-100" style="height: 120px; font-size: 0.9rem; overflow: hidden;">
+        <div class="row g-0 h-100">
+          {% if post.imagen %}
+            <div class="col-4 h-100">
+              <div class="w-100 h-100" style="aspect-ratio: 1 / 1; overflow: hidden;">
+                <img src="{{ post.imagen.url }}" alt="{{ post.titulo }}" class="img-fluid w-100 h-100 rounded-start" style="object-fit: cover;" />
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="col-8 d-flex align-items-center h-100">
+            <div class="card-body py-2 overflow-hidden text-truncate">
+              <h6 class="card-title mb-1 text-truncate">{{ post.titulo|truncate_safe:'70,True' }}</h6>
+              <p class="card-text mb-2 text-truncate">{{ post.resumen|truncate_safe:'100,True' }}</p>
+              <p class="card-text mb-0">
+                <small class="text-muted">{{ post.publicado|date:'d/m/Y' }}</small>
+              </p>
+              <a href="{% url 'show_post' post.id %}" class="stretched-link"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

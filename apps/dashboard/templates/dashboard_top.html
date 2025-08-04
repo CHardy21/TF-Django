@@ -1,0 +1,45 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}
+  Top Publicaciones
+{% endblock %}
+
+{% block main_content %}
+  <style>
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #e9ecef; /* gris claro */
+    }
+    .table-striped tbody tr:nth-of-type(even) {
+      background-color: #dee2e6; /* gris más oscuro */
+    }
+  </style>
+
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0">🏆 Top publicaciones</h2>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th>Título</th>
+            <th>Vistas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in top_posts %}
+            <tr>
+              <td>{{ post.titulo }}</td>
+              <td>{{ post.vistas }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="2" class="text-center text-muted">No hay publicaciones para mostrar.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

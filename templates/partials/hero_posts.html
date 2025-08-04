@@ -1,0 +1,44 @@
+<div class="hero-posts-section container-fluid mt-5 pt-2 ">
+  <div class="row g-3">
+    <!-- Carrusel principal (70%) -->
+    <div class="col-12 col-lg-8">
+      <div id="carouselPosts" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for post in ultimos_posts %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <a href="{% url 'show_post' post.id %}" class="d-block w-100 text-decoration-none text-white position-relative">
+              <img src="{{ post.imagen.url }}" class="d-block w-100 object-fit-cover" style="height: 400px;" alt="{{ post.titulo }}">
+              
+              <div class="carousel-caption w-100 start-0 end-0  px-3 py-2 bg-dark bg-opacity-75">
+                <h5 class="m-0">{{ post.titulo|truncatechars:60 }}</h5>
+              </div>
+              
+            </a>
+          </div>
+        {% endfor %}
+                </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPosts" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselPosts" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Lateral derecho (30%) con tarjetas clickeables -->
+    <div class="col-12 col-lg-4 d-flex flex-column">
+      {% for post in destacados_sidebar|slice:":2" %}
+        <a href="{% url 'show_post' post.id %}" class="text-decoration-none text-white mb-2">
+          <div class="position-relative overflow-hidden" style="height: 195px;">
+            <img src="{{ post.imagen.url }}" class="w-100 h-100 object-fit-cover" alt="{{ post.titulo }}">
+            <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 p-1">
+              <h6 class="m-0 text-white">{{ post.titulo|truncatechars:40 }}</h6>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+

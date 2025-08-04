@@ -1,0 +1,98 @@
+/* static/css/form_styles.css */
+
+/* --- FORMULARIO ESTILIZADO UNIVERSAL --- */
+
+.form-container {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.form-field {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 5px rgba(13, 110, 253, 0.4);
+    outline: none;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* Botones responsivos */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.btn {
+    min-width: 120px;
+}
+
+/* 🌞 Estilos generales para Summernote */
+.summernote-wrapper .note-editor {
+    max-width: 100% !important;
+    max-height: 300px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    scroll-behavior: smooth;
+}
+
+/* 🧼 Scroll estilizado para navegadores WebKit */
+.summernote-wrapper .note-editor::-webkit-scrollbar {
+    width: 8px;
+}
+
+.summernote-wrapper .note-editor::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.summernote-wrapper .note-editor::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 4px;
+}
+
+/* 🎯 Mejora del foco visual */
+.summernote-wrapper .note-editor:focus-within {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+/* ✒️ Área editable dentro del editor */
+.summernote-wrapper .note-editable {
+    overflow-x: auto !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+    padding: 10px;
+    min-height: 150px;
+    line-height: 1.5;
+}
+
+/* 📱 Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .summernote-wrapper .note-editor {
+        font-size: clamp(13px, 2vw, 14px);
+    }
+}

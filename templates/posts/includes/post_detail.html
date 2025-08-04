@@ -1,0 +1,40 @@
+<article class="card shadow-sm mb-4">
+    {% if post.imagen %}
+      <img src="{{ post.imagen.url }}" class="card-img-post" alt="Imagen del post">
+    {% endif %}
+    <div class="card-body">
+      <h2 class="card-title titulo-clamp mb-3">{{ post.titulo }}</h2>
+      <div class="mb-3">
+        <a href="{% url 'show_categoria' post.categoria.id %}" class="badge bg-danger text-white text-decoration-none">
+          {{ post.categoria.nombre }}
+        </a>
+      </div>
+      <div class="text-muted mb-3">
+        <i class="fas fa-calendar-alt me-1"></i> {{ post.fecha|date:"d M Y" }} &nbsp;
+        <i class="fas fa-user me-1"></i> {{ post.autor|default:"anónimo" }}
+      </div>
+  
+
+      
+      {% if post.resumen %}
+        <p class="fw-bold text-secondary mb-3 ">{{ post.resumen|safe }}</p>
+      {% endif %}
+  
+      <div class="post-content mb-4 p-4">{{ post.contenido|safe }}</div>
+
+      <div class="text-muted mb-2">
+        <i class="fas fa-eye"></i> {{ post.vistas }} vistas
+        &nbsp;•&nbsp;
+        <i class="fas fa-comments"></i> {{ comments|length }} comentarios
+      </div>
+<hr>      
+  
+{% if can_edit_or_delete %}
+<div class="d-flex justify-content-end flex-wrap gap-2 mt-3">
+  <a href="{% url 'edit_post' post.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
+  <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar este post?');">Eliminar</a>
+</div>
+{% endif %}
+    </div>
+  </article>
+  

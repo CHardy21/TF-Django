@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/form_styles.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="container my-5">
+    <h3 class="text-center mb-4">¿Eliminar publicación?</h3>
+    <p>Estás por eliminar el siguiente post:</p>
+
+    <strong>{{ post.titulo }}</strong><br />
+    <em>{{ post.resumen|safe|truncatewords:30 }}</em><br />
+
+    {% if post.imagen %}
+      <img src="{{ post.imagen.url }}" alt="Imagen del post" class="img-thumbnail my-3" width="200" /><br />
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'show_post' post.id %}" class="btn btn-outline-secondary">No, cancelar</a>
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

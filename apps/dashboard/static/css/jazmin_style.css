@@ -1,0 +1,55 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f9;
+  color: #2e3440;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(120,120,120,0.1);
+}
+
+header, section {
+  margin-bottom: 2rem;
+}
+
+h2, h3 {
+  color: #4c566a;
+}
+
+.post-card {
+  border: 1px solid #d8dee9;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background-color: #eceff4;
+}
+
+.post-actions a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: #5e81ac;
+}
+
+.btn {
+  background-color: #5e81ac;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.date-filter label {
+  margin-right: 0.5rem;
+}
+
+canvas {
+  margin-top: 1rem;
+}

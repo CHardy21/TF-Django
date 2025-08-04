@@ -1,0 +1,17 @@
+<h4 class="mt-5">También te puede interesar:</h4>
+<div class="row g-3">
+  {% for rel in relacionados %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card shadow-sm h-100">
+        {% if rel.imagen %}
+          <img src="{{ rel.imagen.url }}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ rel.titulo|truncatechars:50 }}</h5>
+          <a href="{% url 'show_post' rel.id %}" class="btn btn-outline-primary btn-sm mt-auto">Ver más</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+

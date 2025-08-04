@@ -1,0 +1,95 @@
+{% extends 'dashboard_base.html' %}
+
+{% block title %}
+  Estadísticas
+{% endblock %}
+
+{% block main_content %}
+  <section id="estadisticas">
+    <h2>📋 Mis Estadísticas</h2>
+    <form method="get">
+      <select name="rango">
+        <option value="">Todo el historial</option>
+        <option value="mes">Este mes</option>
+        <option value="30d">Últimos 30 días</option>
+      </select>
+      <button type="submit">Aplicar filtro</button>
+    </form>
+
+    <ul>
+      <li>Total: {{ total_posts }}</li>
+      <li>Publicadas: {{ publicados }}</li>
+      <li>Borradores: {{ borradores }}</li>
+      <li>Comentarios: {{ total_comentarios }}</li>
+      <li>Promedio vistas: {{ promedio_vistas|floatformat:1 }}</li>
+    </ul>
+
+    <div class="chart-container">
+      <canvas id="graficoPublicaciones"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="graficoVistas"></canvas>
+    </div>
+  </section>
+
+  <section id="top">
+    <h3>🏆 Top publicaciones</h3>
+    <ol>
+      {% for post in top_posts %}
+        <li>{{ post.titulo }} — {{ post.vistas }} vistas</li>
+      {% endfor %}
+    </ol>
+  </section>
+{% endblock %}
+{% block scripts %}
+  <script src="static/js/dashboard.js"></script>
+  <script>
+    new Chart(document.getElementById('graficoPublicaciones'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Publicadas', 'Borradores'],
+        datasets: [{
+          data: [{{ publicados }}, {{ borradores }}],
+          backgroundColor: ['#28a745', '#ffc107'],
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Estado de Publicaciones'
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('graficoVistas'), {
+      type: 'bar',
+      data: {
+        labels: {{ labels|safe }},
+        datasets: [{
+          label: 'Vistas',
+          data: {{ views|safe }},
+          backgroundColor: '#17a2b8'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Publicaciones más vistas'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+{% endblock %}
