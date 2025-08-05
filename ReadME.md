@@ -2,7 +2,7 @@
 #  Trabajo Final - Informatorio 2025
 
 
-# 📰 Blog Platform - Sistema de Gestión de Contenido
+# 📰 Techno Blog - Sistema de Gestión de Contenido
 
 Este proyecto es una plataforma web tipo **blog**, desarrollada con el framework **Django**. Su objetivo es ofrecer una solución completa y escalable para la publicación, gestión y exploración de artículos, incorporando distintos niveles de permisos mediante roles de usuario (Administrador, Colaborador, Registrado).
 
@@ -56,6 +56,11 @@ Incluye todos los permisos anteriores, más:
 - Categorizar artículos.
 - Editar o eliminar comentarios de otros usuarios.
 - Control total de sitio.
+
+
+## Deployment:
+
+https://chardy.pythonanywhere.comentarios
 
 
 ## 🤝 Contribuciones
