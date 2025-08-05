@@ -24,7 +24,8 @@
     <link rel="stylesheet" href="{% static 'css/style.no-min.css' %}?v={{ timestamp }}" />
     <link rel="stylesheet" href="{% static 'css/my-style.css' %}?v={{ timestamp }}" />
 
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}
+    {% endblock %}
   </head>
 
   <body>
@@ -35,6 +36,36 @@
         {% endfor %}
       </ul>
     {% endif %} {% endcomment %}
+
+    {% load static %}
+    <div class="top-user-bar fixed-top bg-dark text-white py-1 px-3 shadow-sm" style="z-index: 1050;">
+      <div class="container-fluid d-flex justify-content-end align-items-center gap-3">
+        {% if user.is_authenticated %}
+          <a href="{% url 'user:profile' %}" class="d-flex align-items-center text-white text-decoration-none">
+            {% if user.avatar %}
+              <img src="{{ user.avatar.url }}" alt="Avatar" width="25px" height="25px" />
+            {% else %}
+              <img src="/static/images/default_avatar.png" alt="Avatar por defecto" width="25px" height="25px" />
+            {% endif %}
+            <span class="ms-2">Hola {{ user.username }}</span>
+          </a>
+
+          {% if user.role == 'admin' %}
+            <a href="/admin/" class="btn btn-sm btn-primary" title="Panel de Control"><i class="fa fa-tachometer-alt"></i></a>
+          {% elif user.role == 'colaborador' %}
+            <a href="/dashboard" class="btn btn-sm btn-primary" title="Panel de Control"><i class="fa fa-tachometer-alt"></i></a>
+          {% endif %}
+
+          <form method="post" action="{% url 'user:logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger" title="Cerrar sesión"><i class="fas fa-sign-out-alt"></i></button>
+          </form>
+        {% else %}
+          <a href="{% url 'user:login' %}" class="btn btn-sm btn-outline-light">Login</a>
+          <a href="{% url 'user:register' %}" class="btn btn-sm btn-outline-light">Registro</a>
+        {% endif %}
+      </div>
+    </div>
 
     <div class="wrapper">
       {% include 'header.html' %}

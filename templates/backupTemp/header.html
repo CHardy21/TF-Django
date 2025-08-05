@@ -1,0 +1,117 @@
+{% load static %}
+
+<div class="container-top p-2">
+  <div class="d-flex top-bar">
+    <div class="flex-grow-1 text-white"></div>
+
+    <div class="">
+      {% if user.is_authenticated %}
+        <a href="{% url 'user:profile' %}">
+          {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="Avatar" width="25px" height="25px" />
+          {% else %}
+            <img src="/static/images/default_avatar.png" alt="Avatar por defecto" width="25px" height="25px" />
+          {% endif %}
+        </a>
+        <a href="{% url 'user:profile' %}">Hola {{ user.username }}</a> |{% if user.role == 'admin' %}
+          <a href="/admin/" class="login" title="Ir al Panel de Control"><i class="fa fa-tachometer-alt"></i></a> |
+        {% endif %}
+        {% if user.role == 'colaborador' %}
+          <a href="/dashboard" class="login w-100px py-0 w-100px py-0" title="Ir al Panel de Control"><i class="fa fa-tachometer-alt"></i></a>
+        {% endif %}
+      {% else %}
+        <a href="{% url 'user:login' %}" class="login px0 py-0" title="Iniciar Sesión">Login</a> | <a href="{% url 'user:register' %}" class="register w-100px py-0" title="Registrate">Registro</a>
+      {% endif %}
+    </div>
+
+    <div class="text-white px-3 py-0">
+      {% if user.is_authenticated %}
+        <a href="#" onclick="document.getElementById('logout-form').submit();" title="Cerrar sesion" class="logout w-100px py-0"><i class="fas fa-sign-out-alt"></i></a>
+        <form method="post" action="{% url 'user:logout' %}" id="logout-form">
+          {% csrf_token %}
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="header-layout-1">
+  <header id="masthead" class="site-header">
+    <div class="masthead-banner af-header-image data-bg" style="background-image: url({% static 'images/bg-header-demo-001.jpeg' %});">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="site-branding">
+              <h1 class="site-title font-family-1"><a href="/" rel="home">Techno Blog</a></h1>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="banner-promotions-wrapper">
+              <div class="promotion-section">
+                <a href="" target="_blank"><img width="1119" height="90" src="{% static 'banners/banner-promo-demo.png' %}" class="attachment-full size-full" alt="banner-promo-1120-wu-1-1 (1)" decoding="async" fetchpriority="high" loading="lazy" /></a>
+              </div>
+            </div>
+            <!-- Trending line END -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav id="site-navigation" class="main-navigation">
+      <div class="container">
+        <div class="row">
+          <div class="kol-12">
+            <div class="navigation-container">
+              <div class="main-navigation-container-items-wrapper">
+                <span class="toggle-menu">
+                  <a href="#" class="aft-void-menu" role="button" aria-label="Toggle Primary Menu" aria-controls="primary-menu" aria-expanded="false">
+                    <span class="screen-reader-text">Primary Menu</span>
+                    <i class="ham"></i>
+                  </a>
+                </span>
+                <span class="af-mobile-site-title-wrap">
+                  <p class="site-title font-family-1">
+                    <a href="/" rel="home">Techno Blog</a>
+                  </p>
+                </span>
+                <div class="menu main-menu">
+                  <ul id="primary-menu" class="menu">
+                    <li id="menu-item-1230" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-1230">
+                      <a href="/" aria-current="page">Inicio</a>
+                    </li>
+                    <li id="menu-item-1219" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1219">
+                      <a href="/posts/">General</a>
+                    </li>
+                    <li id="menu-item-1220" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1220">
+                      <a href="/posts/categoria/2/">Innovación</a>
+                    </li>
+                    <li id="menu-item-1221" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1221">
+                      <a href="/posts/categoria/3/">Programación</a>
+                    </li>
+                    <li id="menu-item-1222" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1222">
+                      <a href="/posts/categoria/4/">Recursos</a>
+                    </li>
+                    <li id="menu-item-1223" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1223">
+                      <a href="/posts/categoria/5/">Seguridad</a>
+                    </li>
+                    <li id="menu-item-1226" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1226">
+                      <a href="/posts/categoria/6/">Gadgets</a>
+                    </li>
+                    <li id="menu-item-1225" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1225">
+                      <a href="/posts/categoria/7/">Sociedad</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="cart-search">
+                <div class="af-search-wrap">
+                  <div class="search-overlay">
+                    <a href="{% url 'search_post' %}" title="Buscar" class="search-icon"><i class="fa fa-search"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>
