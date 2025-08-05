@@ -30,26 +30,26 @@ El sistema cuenta con las apps:
 
 El sistema define **cuatro perfiles de usuario** con diferentes niveles de acceso:
 
-### ⚫ Visitante (no registrado)
+### 🔴 Visitante (no registrado)
 - Navegar libremente por la web.
 - Filtrar publicaciones por categoría, fecha y orden alfabético.
 - Leer artículos.
 - Registrarse e iniciar sesión.
 
-### 🟢 Registrado (Usuario con Rol 'registrado')
+### 🟠 Registrado (Usuario con Rol 'registrado')
 Incluye los permisos de un visitante, más:
 - Comentar en artículos.
 - Editar y eliminar sus propios comentarios.
 - Cerrar sesión.
 
-### 🟢 Colaborador (Usuario con Rol 'colaborador')
+### 🟡 Colaborador (Usuario con Rol 'colaborador')
 Incluye los permisos de un registrado, más:
 - Publicar artículos (post).
 - Editar y eliminar sus propios post y comentarios.
 - Acceso a la app Dashboad (sencillo panel de control para Colaborador)
 - Cerrar sesión.
 
-### 🟣 Administrador (rol 'administrador')
+### 🟢 Administrador (rol 'administrador')
 Incluye todos los permisos anteriores, más:
 - Crear, editar y eliminar artículos.
 - Subir, editar y eliminar imágenes asociadas.
@@ -60,11 +60,11 @@ Incluye todos los permisos anteriores, más:
 
 ## Deployment:
 
-https://chardy.pythonanywhere.comentarios
+https://chardy.pythonanywhere.com
 
 
 ## 🤝 Contribuciones
 
-¡Contribuciones son bienvenidas!
+¡Contribuciones y comentarios son bienvenidas!
 
 ---
