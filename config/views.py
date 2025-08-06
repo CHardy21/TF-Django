@@ -19,11 +19,8 @@ def home(request):
         'primeros_posts': primeros_posts,
     })
 
+def about_view(request):
+    return render(request, 'about.html')
 
 def index(request):
     return render(request, "index.html", {'user': request.user})
-
-    
-def Saludar(request):
-    return HttpResponse("Hola Humano, estas en view Saludar!!!")
-

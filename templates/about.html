@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h1 class="mb-4 text-center">Sobre el Proyecto</h1>
+
+          <p><strong>Techno Blog</strong> es una plataforma web desarrollada como trabajo final del <em>Informatorio 2025</em>. Construida con el framework <strong>Django</strong>, esta aplicación tipo blog ofrece una solución completa para la publicación, gestión y exploración de artículos, con un enfoque escalable y modular.</p>
+
+          <p>El sistema incorpora distintos niveles de permisos mediante roles de usuario, y cumple con todas las consignas del proyecto, además de incluir funcionalidades adicionales como filtros personalizados, paginación, carga dinámica con Ajax y un panel de administración personalizado con <strong>Jazmin</strong>.</p>
+
+          <div class="text-center my-3">
+            <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#consignasCollapse" aria-expanded="false" aria-controls="consignasCollapse">
+              📋 Ver consignas del proyecto
+            </button>
+          </div>
+
+          <div class="collapse" id="consignasCollapse">
+            <div class="card card-body bg-secondary border-0 text-white p-5">
+              <h5 class="mb-3 text-white">Consignas del Trabajo Final - Informatorio 2025</h5>
+
+              <h6>1. Sistema de Autenticación y Perfiles</h6>
+              <ul>
+                <li>Modelo de usuarios con roles (admin, registrado).</li>
+                <li>Registro de usuarios con validación.</li>
+                <li>Login y logout.</li>
+                <li>Middleware para restringir rutas según permisos.</li>
+              </ul>
+
+              <h6>2. Gestión de Posts</h6>
+              <ul>
+                <li>Modelo de Post con campos relevantes.</li>
+                <li>Formulario para crear/editar (solo autenticados).</li>
+                <li>Restricciones para eliminar/modificar según rol.</li>
+              </ul>
+
+              <h6>3. Comentarios</h6>
+              <ul>
+                <li>Modelo relacionado con Post y User.</li>
+                <li>Formulario para comentar (solo registrados).</li>
+                <li>Permisos para editar/eliminar según rol.</li>
+              </ul>
+
+              <h6>4. Filtros y Búsquedas</h6>
+              <ul>
+                <li>Filtrar por fecha, categoría y popularidad.</li>
+              </ul>
+
+              <h6>5. Extras</h6>
+              <ul>
+                <li>Paginación de resultados.</li>
+                <li>Notificaciones por actividad.</li>
+                <li>Likes o votos en posts/comentarios.</li>
+              </ul>
+
+              <h6>6. Deployment</h6>
+              <ul>
+                <li>Despliegue en PythonAnywhere.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="mt-4">🧩 Estructura del Proyecto</h3>
+          <ul>
+            <li><strong>user</strong>: gestión de usuarios y autenticación</li>
+            <li><strong>posts</strong>: publicación y edición de artículos</li>
+            <li><strong>comments</strong>: sistema de comentarios</li>
+            <li><strong>core</strong>: filtros y utilidades compartidas</li>
+            <li><strong>dashboar</strong>: panel de control para colaboradores</li>
+          </ul>
+
+          <h3 class="mt-4">🛠️ Tecnologías Utilizadas</h3>
+          <ul>
+            <li><strong>Django</strong>: backend y lógica de negocio</li>
+            <li><strong>HTML5</strong>: estructura del frontend</li>
+            <li><strong>Bootstrap 5</strong>: estilos, componentes e íconos</li>
+            <li><strong>JavaScript + Ajax</strong>: interactividad y carga dinámica</li>
+            <li><strong>SQLite3</strong>: base de datos por defecto</li>
+          </ul>
+
+          <h3 class="mt-4">🔐 Roles de Usuario</h3>
+          <ul>
+            <li><strong>🔴 Visitante</strong>: puede navegar, filtrar y leer artículos.</li>
+            <li><strong>🟠 Registrado</strong>: puede comentar y gestionar sus propios comentarios.</li>
+            <li><strong>🟡 Colaborador</strong>: puede publicar y editar sus propios artículos, y acceder a un panel de control.</li>
+            <li><strong>🟢 Administrador</strong>: tiene control total sobre el contenido y la moderación del sitio.</li>
+          </ul>
+
+          <h3 class="mt-4">🚀 Despliegue</h3>
+          <p>El proyecto está disponible en producción en:  
+            <a href="https://chardy.pythonanywhere.com" target="_blank">chardy.pythonanywhere.com</a>
+          </p>
+
+          <h3 class="mt-4">🤝 Contribuciones</h3>
+          <p>Este proyecto está abierto a sugerencias, mejoras y comentarios. ¡Toda colaboración es bienvenida!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

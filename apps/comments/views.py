@@ -14,7 +14,11 @@ def create_comment(request, post_id):
 
 @login_required
 def delete_comment(request, comment_id):
-    comment = get_object_or_404(Comment, id=comment_id)
+    try:
+        comment = Comment.objects.get(pk=comment_id)
+    except Comment.DoesNotExist:
+        pass
+    # comment = get_object_or_404(Comment, id=comment_id)
 
     # Permitir borrar si:
     # (1) el usuario creó el comentario
@@ -27,7 +31,7 @@ def delete_comment(request, comment_id):
     ):
         comment.delete()
 
-    return redirect('post_detail', post_id=comment.post.id)
+    return redirect('show_post', post_id=comment.post.id)
 
 
 @login_required

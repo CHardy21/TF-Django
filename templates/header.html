@@ -41,9 +41,13 @@
           </li>
         </ul>
         <form class="d-flex" action="{% url 'search_post' %}" method="get">
-          <input class="form-control me-2" type="search" name="q" placeholder="Buscar..." aria-label="Buscar" />
-          <button class="btn btn-outline-light" type="submit"><i class="fa fa-search"></i></button>
+          <input class="form-control ms-2" type="search" name="q" placeholder="Buscar..." aria-label="Buscar" />
+          <button class="btn btn-outline-light ms-2" type="submit"><i class="fa fa-search"></i></button>
         </form>
+        <a href="{% url 'about' %}" class="btn btn-outline-light ms-2" title="Sobre el proyecto">
+          <i class="fa fa-info-circle"></i>
+        </a>
+        
       </div>
     </div>
   </nav>

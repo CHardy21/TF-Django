@@ -37,9 +37,8 @@ header {
   background-position: center;
 }
 
-
-
 /* Pantallas grandes: branding y banner en la misma fila */
+/* Estilos generales para pantallas grandes */
 .top-bar {
   display: flex;
   flex-wrap: nowrap;
@@ -53,9 +52,13 @@ header {
   width: auto;
   padding: 10px;
 }
-
+@media (min-width: 992px) {
+  .site-banner img {
+    max-width: 950px;
+  }
+}
 /* Pantallas chicas: ocultar branding y centrar banner */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .site-branding {
     display: none !important;
   }
