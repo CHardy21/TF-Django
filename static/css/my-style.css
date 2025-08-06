@@ -13,13 +13,16 @@ body {
   height: 40px;
   font-size: 0.9rem;
 }
+
 .top-user-bar a {
   color: white !important;
-  text-decoration: none; /* Opcional: elimina el subrayado */
+  text-decoration: none;
+  /* Opcional: elimina el subrayado */
 }
 
 .top-user-bar a:hover {
-  color: #f0f0f0; /* Opcional: color más claro al pasar el mouse */
+  color: #f0f0f0;
+  /* Opcional: color más claro al pasar el mouse */
 }
 
 
@@ -34,8 +37,95 @@ header {
   background-position: center;
 }
 
-.navbar-nav .nav-link {
+
+
+/* Pantallas grandes: branding y banner en la misma fila */
+.top-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-banner img {
+  max-height: 100px;
+  height: auto;
+  width: auto;
+  padding: 10px;
+}
+
+/* Pantallas chicas: ocultar branding y centrar banner */
+@media (max-width: 768px) {
+  .site-branding {
+    display: none !important;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .site-banner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .site-banner img {
+    max-width: 100%;
+    max-height: 120px;
+    height: auto;
+  }
+}
+
+
+/* Navbar styles */
+.navbar-brand,
+.navbar-brand:hover,
+.navbar-brand:focus,
+.navbar-brand:active {
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.navbar-brand:hover {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+}
+
+
+.navbar-nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.navbar .nav-link {
+  color: #fff !important;
+  font-size: 1.2rem !important;
   font-weight: 500;
+}
+
+.navbar .nav-link:hover {
+  color: #ffc107 !important;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.navbar .nav-item:hover {
+  border-bottom: 2px solid #ffc107;
+}
+
+.navbar input[type="search"],
+.navbar button {
+  font-size: 1.1rem;
 }
 
 img.rounded-circle {

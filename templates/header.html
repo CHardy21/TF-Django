@@ -1,33 +1,47 @@
 {% load static %}
 <header class="bg-dark text-white pt-2">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <!-- Branding -->
-    <div class="d-flex align-items-center">
-      <a href="/" class="text-white text-decoration-none fs-3 fw-bold">Techno Blog</a>
+  <!-- Top Bar -->
+  <div class="container-fluid top-bar d-flex flex-wrap align-items-center justify-content-between">
+    <!-- Branding (solo visible en pantallas medianas o mayores) -->
+    <div class="site-branding d-none d-md-flex align-items-center">
+      <a href="/" class="text-white text-decoration-none fs-1 fw-bold">Techno Blog</a>
+    </div>
+
+    <!-- Banner -->
+    <div class="site-banner">
+      <img src="{% static 'banners/banner-promo-demo.png' %}" alt="Banner promocional" class="img-fluid" />
     </div>
   </div>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary mt-2">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger mt-2">
     <div class="container-fluid">
       <a class="navbar-brand d-lg-none" href="/">Techno Blog</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"><span class="navbar-toggler-icon"></span></button>
 
       <div class="collapse navbar-collapse" id="mainNavbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="/posts/">General</a></li>
-          <li class="nav-item"><a class="nav-link" href="/posts/categoria/2/">Innovación</a></li>
-          <li class="nav-item"><a class="nav-link" href="/posts/categoria/3/">Programación</a></li>
-          <li class="nav-item"><a class="nav-link" href="/posts/categoria/4/">Recursos</a></li>
-          <li class="nav-item"><a class="nav-link" href="/posts/categoria/5/">Seguridad</a></li>
-          <li class="nav-item"><a class="nav-link" href="/posts/categoria/6/">Gadgets</a></li>
-          <li class="nav-item"><a class="nav-link" href="/posts/categoria/7/">Sociedad</a></li>
+          <!-- Nav items... -->
+          <li class="nav-item">
+            <a class="nav-link" href="/">Inicio</a>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="/posts/">General</a>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="/posts/categoria/2/">Innovación</a>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="/posts/categoria/3/">Programación</a>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="/posts/categoria/4/">Recursos</a>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="/posts/categoria/5/">Seguridad</a>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="/posts/categoria/6/">Gadgets</a>
+          </li> <li class="nav-item">
+            <a class="nav-link" href="/posts/categoria/7/">Sociedad</a>
+          </li>
         </ul>
         <form class="d-flex" action="{% url 'search_post' %}" method="get">
-          <input class="form-control me-2" type="search" name="q" placeholder="Buscar..." aria-label="Buscar">
+          <input class="form-control me-2" type="search" name="q" placeholder="Buscar..." aria-label="Buscar" />
           <button class="btn btn-outline-light" type="submit"><i class="fa fa-search"></i></button>
         </form>
       </div>
