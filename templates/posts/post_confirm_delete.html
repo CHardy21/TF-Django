@@ -6,23 +6,36 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container my-5">
-    <h3 class="text-center mb-4">¿Eliminar publicación?</h3>
-    <p>Estás por eliminar el siguiente post:</p>
+  <div class="container-fluid d-flex justify-content-center align-items-center bg-light" style="min-height: 100vh;">
+    <div class="card shadow-sm p-4 w-100" style="max-width: 500px;">
+      <h4 class="mb-4 text-danger text-center">
+        <i class="bi bi-trash3-fill me-2"></i>¿Eliminar publicación?
+      </h4>
 
-    <strong>{{ post.titulo }}</strong><br />
-    <em>{{ post.resumen|safe|truncatewords:30 }}</em><br />
+      <p class="text-center">Estás por eliminar el siguiente post:</p>
 
-    {% if post.imagen %}
-      <img src="{{ post.imagen.url }}" alt="Imagen del post" class="img-thumbnail my-3" width="200" /><br />
-    {% endif %}
-
-    <form method="POST">
-      {% csrf_token %}
-      <div class="d-flex justify-content-between mt-4">
-        <a href="{% url 'show_post' post.id %}" class="btn btn-outline-secondary">No, cancelar</a>
-        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+      <div class="mb-3 text-center">
+        <strong class="d-block">{{ post.titulo }}</strong>
+        <em class="text-muted d-block">{{ post.resumen|safe|truncatewords:30 }}</em>
       </div>
-    </form>
+
+      {% if post.imagen %}
+        <div class="text-center mb-3">
+          <img src="{{ post.imagen.url }}" alt="Imagen del post" class="img-thumbnail" style="max-width: 200px;" />
+        </div>
+      {% endif %}
+
+      <form method="POST">
+        {% csrf_token %}
+        <div class="d-flex justify-content-between">
+          <a href="{% url 'show_post' post.id %}" class="btn btn-outline-secondary w-45">
+            <i class="bi bi-x-circle me-1"></i> Cancelar
+          </a>
+          <button type="submit" class="btn btn-danger w-45">
+            <i class="bi bi-check-circle me-1"></i> Eliminar
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 {% endblock %}
