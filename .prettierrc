@@ -1,0 +1,14 @@
+{
+  "printWidth": 80,                // Máximo de caracteres por línea
+  "tabWidth": 2,                   // Espacios por tabulación
+  "useTabs": false,                // Usa espacios en lugar de tabs
+  "semi": true,                    // Agrega punto y coma al final de líneas JS
+  "singleQuote": true,            // Usa comillas simples en JS y HTML
+  "trailingComma": "es5",         // Coma final en objetos/arrays donde sea válido
+  "bracketSpacing": true,         // Espacio entre llaves: { foo: bar }
+  "arrowParens": "avoid",         // Evita paréntesis innecesarios en funciones flecha
+  "htmlWhitespaceSensitivity": "ignore", // Evita que Prettier modifique espacios en HTML
+  "embeddedLanguageFormatting": "auto",  // Formatea JS/CSS embebido en HTML
+  "jsxSingleQuote": true,         // Comillas simples en JSX (por si usás React)
+  "endOfLine": "lf"               // Línea de fin estilo Unix (evita conflictos en Git)
+}

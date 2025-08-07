@@ -1,0 +1,28 @@
+# Carpetas de Django que no deben tocarse
+migrations/
+static/vendor/
+static/**/*.min.css
+static/**/*.min.js
+
+# Archivos compilados o externos
+*.min.css
+*.min.js
+*.map
+*.lock
+*.pyc
+__pycache__/
+
+# Archivos de configuración
+.env
+*.sqlite3
+db.sqlite3
+
+# Archivos de VS Code y Prettier
+.vscode/
+.prettierrc
+.prettierignore
+
+# Otros
+node_modules/
+dist/
+build/

@@ -6,9 +6,9 @@ from django.db.models import Avg
 from django.utils.dateparse import parse_date
 from django.utils import timezone
 from datetime import timedelta
-import csv
 from apps.posts.models import Post
 from apps.comments.models import Comment
+import csv
 
 
 @login_required
@@ -101,7 +101,7 @@ def estadisticas_view(request):
 
     hoy = timezone.now().date()
 
-    # 🔀 Aplicamos lógica según el rango
+    # lógica según el rango
     if rango == 'mes':
         fecha_inicio = hoy.replace(day=1)
         fecha_fin = hoy

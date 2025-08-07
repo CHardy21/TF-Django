@@ -15,7 +15,6 @@ class Categoria(models.Model):
 
 class Post(models.Model):
     titulo = models.CharField(max_length=150, null=False)
-    # subtitulo = models.TextField(max_length=500, null=False,blank=True)
     imagen = models.ImageField(null=True, blank=True, upload_to='posts', default='posts/post_default.png')
     resumen = SummernoteTextField(max_length=1000, null=False, blank=True)
     contenido = SummernoteTextField(null=False, verbose_name='Escriba aqui el contenido')

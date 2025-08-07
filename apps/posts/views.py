@@ -6,17 +6,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 
 from apps.posts.forms import PostForm
-#from .models import Post
 from apps.comments.models import Comment
 from apps.posts.models import Post, Categoria
 
 from django.core.paginator import Paginator
 from django.db.models import Q
 from datetime import datetime
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 def showAllPosts(request):
-    all_posts = Post.objects.all().order_by('-fecha')  # Orden descendente por fecha
+    all_posts = Post.objects.all().order_by('-fecha') 
     paginator = Paginator(all_posts, 8)  # Mostrar 8 posts por página
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -69,8 +70,6 @@ def show_categoria(request, id):
         'page_obj': page_obj
     })
 
-from django.http import JsonResponse
-from django.template.loader import render_to_string
 
 def load_posts(request):
     offset = int(request.GET.get('offset', 0))
@@ -78,7 +77,6 @@ def load_posts(request):
 
     nuevos_posts = Post.objects.filter(activo=True).order_by('-publicado')[offset:offset+POSTS_POR_PAGINA]
 
-    # Renderizar como HTML
     html = render_to_string('partials/list_posts.html', {
         'todos_los_posts': nuevos_posts
     }, request=request)
@@ -114,7 +112,6 @@ def search_posts(request):
 
     filtros_aplicados = q or fecha_inicio or fecha_fin or categoria
 
-    # PAGINACIÓN 🌀
     paginator = Paginator(resultados, 6)  # 6 resultados por página
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -122,7 +119,7 @@ def search_posts(request):
     return render(request, "posts/posts_search.html", {
         "categorias": Categoria.objects.all(),
         "filtros_aplicados": filtros_aplicados,
-        "resultados": page_obj,  # ahora es el objeto paginado
+        "resultados": page_obj,  
     })
 
 # ------------------------
@@ -132,7 +129,7 @@ def create_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.autor = request.user  # Asociamos el post al autor que lo creó
+            post.autor = request.user  
             post.save()
             return redirect('show_post', post_id=post.id)
     else:
@@ -145,12 +142,11 @@ def create_post(request):
 class EditPostView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
-    template_name = 'posts/post_edit.html'  # Tu template personalizado
+    template_name = 'posts/post_edit.html'  
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
 
-        # Solo el autor, staff o superuser puede editar
         user = request.user
         if not (
             user == self.object.autor

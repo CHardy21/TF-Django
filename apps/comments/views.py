@@ -18,7 +18,6 @@ def delete_comment(request, comment_id):
         comment = Comment.objects.get(pk=comment_id)
     except Comment.DoesNotExist:
         pass
-    # comment = get_object_or_404(Comment, id=comment_id)
 
     # Permitir borrar si:
     # (1) el usuario creó el comentario

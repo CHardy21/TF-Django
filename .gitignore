@@ -82,8 +82,6 @@ target/
 profile_default/
 ipython_config.py
 
-# VSC
-.vscode
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
@@ -172,7 +170,7 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+.idea/
 
 # Abstra
 # Abstra is an AI-powered process automation framework.
@@ -185,7 +183,7 @@ cython_debug/
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 #  and can be added to the global gitignore or merged into this file. However, if you prefer, 
 #  you could uncomment the following to ignore the enitre vscode folder
-# .vscode/
+#.vscode/
 
 # Ruff stuff:
 .ruff_cache/
@@ -199,3 +197,46 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+.flake8
+
+# 🐍 Python/Django
+*.pyc                 # Compiled Python files
+__pycache__/          # Python cache folders
+*.sqlite3             # SQLite DB files (local dev only)
+db.sqlite3            # Default Django DB
+.env                  # Environment variables (secrets, keys)
+migrations/           # Optional: ignore if auto-generated and not manually curated
+
+# 📦 Node.js / Frontend
+node_modules/         # Dependencies installed via npm/yarn
+dist/                 # Build output (e.g., from bundlers or static generators)
+build/                # Alternative build folder
+*.lock                # Package lock files (optional: keep if you want reproducible installs)
+
+# ⚙️ VS Code
+.vscode/              # Editor settings (optional: include if team uses shared settings)
+
+# 🧹 Temporary / Generated files
+*.log                 # Log files
+*.map                 # Source maps (from bundlers)
+*.min.css             # Minified CSS
+*.min.js              # Minified JS
+.DS_Store             # macOS system file
+Thumbs.db             # Windows system file
+
+# 🎨 Prettier (optional: include if config is personal)
+# .prettierrc         # Prettier config file
+# .prettierignore     # Files ignored by Prettier
+
+# 📸 Media / Uploads (if applicable)
+media/                # User-uploaded content (optional: ignore if not versioned)
+
+# 🧪 Testing / Coverage
+.coverage             # Coverage reports
+htmlcov/              # Coverage HTML output
+pytest_cache/         # Pytest cache
+
+# 🧰 Django static & media (if collected locally)
+staticfiles/          # Collected static files
+mediafiles/           # Collected media files

@@ -10,7 +10,7 @@ User = get_user_model()
 class SignUpView(FormView):
     template_name = "registration/register.html"
     form_class = SignUpForm
-    success_url = reverse_lazy("user:profile")  # O a donde quieras redirigir luego
+    success_url = reverse_lazy("user:profile")  
 
     def form_valid(self, form):
         user = form.save()
@@ -34,7 +34,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     #fields = ["avatar", "first_name", "last_name", "email"]
     form_class = EditProfileForm
     template_name = 'user/edit_profile.html'
-    success_url = reverse_lazy('user:profile')  # redirige al perfil después de guardar
+    success_url = reverse_lazy('user:profile')  
 
     def get_object(self):
         return self.request.user

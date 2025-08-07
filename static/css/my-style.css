@@ -20,9 +20,10 @@ body {
   /* Opcional: elimina el subrayado */
 }
 
-.top-user-bar a.login{
+.top-user-bar a.login {
   border: 1px solid grey;
 }
+
 /* Hover para el botón Login */
 .btn-outline-light.login:hover {
   background-color: var(--bs-primary);
@@ -34,7 +35,8 @@ body {
 .registro-hover:hover {
   background-color: transparent;
   color: #fff;
-  border: 1px solid #f8f9fa; /* color de btn-outline-light */
+  border: 1px solid #f8f9fa;
+  /* color de btn-outline-light */
 }
 
 
@@ -65,11 +67,13 @@ header {
   width: auto;
   padding: 10px;
 }
+
 @media (min-width: 992px) {
   .site-banner img {
     max-width: 950px;
   }
 }
+
 /* Pantallas chicas: ocultar branding y centrar banner */
 @media (max-width: 991px) {
   .site-branding {
@@ -346,4 +350,29 @@ a.bs-social-youtube {
   background-color: #d9534f;
   font-size: 0.9rem;
   padding: 0.4em 0.6em;
+}
+
+/**** Footer Styles ****/
+.blockspare-c9fd6378-217d-4 .blockspare-social-wrapper {
+  text-align: left;
+  margin-top: 5px;
+  margin-right: 0px;
+  margin-bottom: 30px;
+  margin-left: 0px;
+}
+
+.blockspare-c9fd6378-217d-4 .blockspare-social-wrapper .blockspare-social-icons>span {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 1025px) {
+  .blockspare-c9fd6378-217d-4 .blockspare-social-wrapper .blockspare-social-icons>span {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .blockspare-c9fd6378-217d-4 .blockspare-social-wrapper .blockspare-social-icons>span {
+    font-size: 14px;
+  }
 }

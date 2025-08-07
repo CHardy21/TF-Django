@@ -179,7 +179,7 @@ JAZZMIN_SETTINGS = {
             "icon": "fas fa-users"
         }
     ],
-    "post": [  # <- Nueva sección
+    "post": [  
             {
                 "name": "Comentarios",
                 "url": "admin:comments_comments_changelist",
