@@ -31,7 +31,7 @@
                 <p class="mt-3 mb-0 text-muted">
                   <i class="fas fa-user me-1"></i> {{ post.autor.username|default:'anónimo' }}
                   &nbsp;&nbsp;
-                  <i class="fas fa-calendar-alt me-1"></i> {{ post.fecha_creacion|date:'d M Y' }}
+                  <i class="fas fa-calendar-alt me-1"></i> {{ post.publicado|date:'d/m/Y' }}
                 </p>
               </div>
             </div>

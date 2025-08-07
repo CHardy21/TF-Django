@@ -20,10 +20,23 @@ body {
   /* Opcional: elimina el subrayado */
 }
 
-.top-user-bar a:hover {
-  color: #f0f0f0;
-  /* Opcional: color más claro al pasar el mouse */
+.top-user-bar a.login{
+  border: 1px solid grey;
 }
+/* Hover para el botón Login */
+.btn-outline-light.login:hover {
+  background-color: var(--bs-primary);
+  color: #fff;
+  border-color: var(--bs-primary);
+}
+
+/* Hover para el botón Registro */
+.registro-hover:hover {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #f8f9fa; /* color de btn-outline-light */
+}
+
 
 
 .site-header {

@@ -60,8 +60,8 @@
             <button type="submit" class="btn btn-sm btn-danger" title="Cerrar sesión"><i class="fas fa-sign-out-alt"></i></button>
           </form>
         {% else %}
-          <a href="{% url 'user:login' %}" class="btn btn-sm btn-outline-light">Login</a>
-          <a href="{% url 'user:register' %}" class="btn btn-sm btn-outline-light">Registro</a>
+          <a href="{% url 'user:login' %}" class="btn btn-sm btn-outline-light login">Login</a>
+          <a href="{% url 'user:register' %}" class="btn btn-sm btn-outline-none registro-hover">Registro</a>
         {% endif %}
       </div>
     </div>
