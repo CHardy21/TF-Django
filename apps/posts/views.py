@@ -14,7 +14,7 @@ from django.db.models import Q
 from datetime import datetime
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-
+from django.urls import reverse
 
 def showAllPosts(request):
     all_posts = Post.objects.all().order_by('-fecha') 
@@ -170,8 +170,10 @@ class EditPostView(LoginRequiredMixin, UpdateView):
         self.reemplazar_imagen(post)
         return super().form_valid(form)
 
+    # def get_success_url(self):
+    #     return redirect('show_post', pk=self.object.pk).url
     def get_success_url(self):
-        return redirect('show_post', pk=self.object.pk).url
+        return reverse('show_post', kwargs={'post_id': self.object.pk})
 
 @login_required
 def delete_post(request, post_id):

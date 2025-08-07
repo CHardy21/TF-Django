@@ -10,11 +10,14 @@
   <div class="container my-5">
     <h3 class="text-center mb-4">Editar publicación</h3>
 
-    {% include 'form_base.html' %}
+    <form method="post">
+      {% csrf_token %}
+      {% include 'form_base.html' %}
 
-    <div class="d-flex justify-content-between mt-4">
-      <a href="/" class="btn btn-outline-secondary">Cancelar</a>
-      <button type="submit" class="btn btn-primary">Guardar</button>
-    </div>
+      <div class="d-flex justify-content-between mt-4">
+        <a href="/" class="btn btn-outline-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
   </div>
 {% endblock %}
