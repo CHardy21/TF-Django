@@ -1,26 +1,25 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hero_posts.css' %}" />
+<link rel="stylesheet" href="{% static 'css/most_related_posts.css' %}" />
+{% endblock %} {% block content %} {% include 'partials/hero_posts.html' with ultimos_posts=posts_recientes destacados_sidebar=posts_destacados %}
+<hr />
 
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/hero_posts.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/most_related_posts.css' %}" />
-{% endblock %}
+{% include 'partials/most_read_posts.html' with posts_mas_leidos=posts_mas_leidos %}
+<hr />
 
-{% block content %}
-  {% include 'partials/hero_posts.html' with ultimos_posts=posts_recientes destacados_sidebar=posts_destacados %}
-  <hr />
-  {% include 'partials/most_read_posts.html' with posts_mas_leidos=posts_mas_leidos %}
-  <hr />
+{% include 'partials/banner_horizontal_home.html' %}
+<hr />
 
-  <div id="post-container" class="row">
-    <h4 class="mt-3">📚 Todos los posts disponibles</h4>
+<div id="post-container" class="row">
+  <h4 class="mt-3">📚 Todos los posts disponibles</h4>
 
-    {% include 'partials/list_posts.html' with todos_los_posts=primeros_posts %}
-  </div>
+  {% include 'partials/list_posts.html' with todos_los_posts=primeros_posts %}
+</div>
 
-  <div class="text-center mt-4 mb-5">
-    <button id="load-more" class="btn btn-primary">Cargar más</button>
-  </div>
+<div class="text-center mt-4 mb-5">
+  <button id="load-more" class="btn btn-primary">Cargar más</button>
+</div>
 
-  <script src="{% static 'js/load_posts.js' %}"></script> <hr />
+<script src="{% static 'js/load_posts.js' %}"></script>
+<hr />
 {% endblock %}

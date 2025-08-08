@@ -1,0 +1,19 @@
+{% load static %}
+
+<style>
+  .banner-container {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+</style>
+
+<div class="banner-container">
+  <img src="{% static 'banners\yellow-banner.png' %}" alt="..." class="banner-img">
+</div>

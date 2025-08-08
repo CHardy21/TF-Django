@@ -1,21 +1,53 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Acceso denegado</title>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>¡Oops! Página no encontrada</title>
     <style>
-      body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: #fdf6f6;
-        text-align: center;
-        margin-top: 80px;
-      }
-      h1 {
-        color: #bf616a;
-      }
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            font-size: 72px;
+            margin-bottom: 10px;
+            color: #dc3545;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        .emoji {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
     </style>
-  </head>
-  <body>
-    <h1>🚫 Acceso denegado</h1>
-    <p>Esta sección es solo para colaboradores.</p>
-  </body>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🚧</div>
+        <h1>404</h1>
+        <p>La página que estás buscando no existe... o se fue de vacaciones 🏖️</p>
+        <a href="/">Volver al inicio</a>
+    </div>
+</body>
 </html>
+
