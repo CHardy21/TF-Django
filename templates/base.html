@@ -28,14 +28,6 @@
   </head>
 
   <body>
-    {% comment %} {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %} {% endcomment %}
-
     {% load static %}
     <div class="top-user-bar fixed-top bg-dark text-white py-1 px-3 shadow-sm" style="z-index: 1050;">
       <div class="container-fluid d-flex justify-content-end align-items-center gap-3">
@@ -71,6 +63,7 @@
       <main style="height: auto; padding: 1em;">
         {% block content %}
 
+
         {% endblock %}
       </main>
 
@@ -79,5 +72,15 @@
       <!-- Bootstrap JavaScript Libraries -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </div>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toastElList = [].slice.call(document.querySelectorAll(".toast"));
+    toastElList.forEach(function (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    });
+  });
+</script>
+
   </body>
 </html>

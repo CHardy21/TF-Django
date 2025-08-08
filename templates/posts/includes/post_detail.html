@@ -32,7 +32,7 @@
 {% if can_edit_or_delete %}
 <div class="d-flex justify-content-end flex-wrap gap-2 mt-3">
   <a href="{% url 'edit_post' post.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
-  <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar este post?');">Eliminar</a>
+  <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-outline-danger" >Eliminar</a>
 </div>
 {% endif %}
     </div>

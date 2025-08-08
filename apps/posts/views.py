@@ -1,9 +1,13 @@
 # apps/posts/views.py
 from django.shortcuts import redirect, render, get_object_or_404
-from django.views.generic.edit import UpdateView
-from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic import DeleteView
+from django.contrib import messages
+
+# from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 
 from apps.posts.forms import PostForm
 from apps.comments.models import Comment
@@ -16,15 +20,15 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
 
+
 def showAllPosts(request):
-    all_posts = Post.objects.all().order_by('-fecha') 
+    all_posts = Post.objects.all().order_by("-fecha")
     paginator = Paginator(all_posts, 8)  # Mostrar 8 posts por página
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'posts/posts_show_all.html', {
-        'page_obj': page_obj
-    })
+    return render(request, "posts/posts_show_all.html", {"page_obj": page_obj})
+
 
 def showPost(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -32,64 +36,68 @@ def showPost(request, post_id):
     related_post = Post.objects.filter(categoria=post.categoria).exclude(id=post.id)[:3]
 
     post.vistas += 1
-    post.save(update_fields=['vistas'])
+    post.save(update_fields=["vistas"])
 
     can_edit_or_delete = (
         request.user == post.autor
         or request.user.is_staff
         or request.user.is_superuser
-        or request.user.groups.filter(name='admin').exists()
+        or request.user.groups.filter(name="admin").exists()
     )
 
-    if request.method == 'POST':
+    if request.method == "POST":
         if request.user.is_authenticated:
-            content = request.POST.get('content', '').strip()
+            content = request.POST.get("content", "").strip()
             if content:
                 Comment.objects.create(post=post, user=request.user, content=content)
-                return redirect('show_post', post_id=post.id)
+                return redirect("show_post", post_id=post.id)
         else:
-            return redirect('login')
+            return redirect("login")
 
-    return render(request, 'posts/posts_show.html', {
-        'post': post,
-        'comments': comments,
-        'can_edit_or_delete': can_edit_or_delete,
-        'relacionados': related_post,
-    })
+    return render(
+        request,
+        "posts/posts_show.html",
+        {
+            "post": post,
+            "comments": comments,
+            "can_edit_or_delete": can_edit_or_delete,
+            "relacionados": related_post,
+        },
+    )
+
 
 def show_categoria(request, id):
     categoria = get_object_or_404(Categoria, id=id)
     posts_list = Post.objects.filter(categoria=categoria)
 
     paginator = Paginator(posts_list, 8)  # 6 posts por página
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'posts/categoria_show.html', {
-        'categoria': categoria,
-        'page_obj': page_obj
-    })
+    return render(
+        request,
+        "posts/categoria_show.html",
+        {"categoria": categoria, "page_obj": page_obj},
+    )
 
 
 def load_posts(request):
-    offset = int(request.GET.get('offset', 0))
+    offset = int(request.GET.get("offset", 0))
     POSTS_POR_PAGINA = 4
 
-    nuevos_posts = Post.objects.filter(activo=True).order_by('-publicado')[offset:offset+POSTS_POR_PAGINA]
+    nuevos_posts = Post.objects.filter(activo=True).order_by("-publicado")[
+        offset : offset + POSTS_POR_PAGINA
+    ]
 
-    html = render_to_string('partials/list_posts.html', {
-        'todos_los_posts': nuevos_posts
-    }, request=request)
+    html = render_to_string(
+        "partials/list_posts.html", {"todos_los_posts": nuevos_posts}, request=request
+    )
 
     # Verificar si quedan más
     total_posts = Post.objects.filter(activo=True).count()
     quedan_posts = offset + POSTS_POR_PAGINA < total_posts
 
-    return JsonResponse({
-        'html': html,
-        'quedan_posts': quedan_posts
-    })
-
+    return JsonResponse({"html": html, "quedan_posts": quedan_posts})
 
 
 def search_posts(request):
@@ -101,7 +109,9 @@ def search_posts(request):
     resultados = Post.objects.all()
 
     if q:
-        resultados = resultados.filter(titulo__icontains=q) | resultados.filter(resumen__icontains=q)
+        resultados = resultados.filter(titulo__icontains=q) | resultados.filter(
+            resumen__icontains=q
+        )
 
     if fecha_inicio:
         resultados = resultados.filter(fecha__gte=fecha_inicio)
@@ -116,33 +126,49 @@ def search_posts(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, "posts/posts_search.html", {
-        "categorias": Categoria.objects.all(),
-        "filtros_aplicados": filtros_aplicados,
-        "resultados": page_obj,  
-    })
+    return render(
+        request,
+        "posts/posts_search.html",
+        {
+            "categorias": Categoria.objects.all(),
+            "filtros_aplicados": filtros_aplicados,
+            "resultados": page_obj,
+        },
+    )
+
 
 # ------------------------
-@login_required
-def create_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.autor = request.user  
-            post.save()
-            return redirect('show_post', post_id=post.id)
-    else:
-        form = PostForm()
+# @login_required
+# def create_post(request):
+#     if request.method == "POST":
+#         form = PostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.autor = request.user
+#             post.save()
+#             return redirect("show_post", post_id=post.id)
+#     else:
+#         form = PostForm()
 
-    return render(request, 'posts/post_create.html', {
-        'form': form
-    })
+#     return render(request, "posts/post_create.html", {"form": form})
+
+
+class CreatePostView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = "posts/post_create.html"
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.autor = self.request.user
+        post.save()
+        return redirect("show_post", post_id=post.id)
+
 
 class EditPostView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
-    template_name = 'posts/post_edit.html'  
+    template_name = "posts/post_edit.html"
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -152,16 +178,16 @@ class EditPostView(LoginRequiredMixin, UpdateView):
             user == self.object.autor
             or user.is_staff
             or user.is_superuser
-            or user.groups.filter(name='admin').exists()
+            or user.groups.filter(name="admin").exists()
         ):
-            return redirect('show_post', pk=self.object.pk)
+            return redirect("show_post", pk=self.object.pk)
 
         return super().dispatch(request, *args, **kwargs)
 
     def reemplazar_imagen(self, post):
-        imagen_nueva = self.request.FILES.get('imagen')
+        imagen_nueva = self.request.FILES.get("imagen")
         if imagen_nueva:
-            if post.imagen and post.imagen.name != 'posts/post_default.png':
+            if post.imagen and post.imagen.name != "posts/post_default.png":
                 post.imagen.delete(save=False)
             post.imagen = imagen_nueva
 
@@ -173,23 +199,49 @@ class EditPostView(LoginRequiredMixin, UpdateView):
     # def get_success_url(self):
     #     return redirect('show_post', pk=self.object.pk).url
     def get_success_url(self):
-        return reverse('show_post', kwargs={'post_id': self.object.pk})
+        return reverse("show_post", kwargs={"post_id": self.object.pk})
 
-@login_required
-def delete_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
 
-    if not (
-        request.user == post.autor
-        or request.user.is_staff
-        or request.user.is_superuser
-        or request.user.groups.filter(name='admin').exists()
-    ):
-        return HttpResponse("No tenés permiso para eliminar este post", status=403)
+class DeletePostView(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = "posts/post_confirm_delete.html"
+    success_url = reverse_lazy("posts")
 
-    if request.method == 'POST':
-        post.delete()
-        return redirect('posts')
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        titulo = self.object.titulo
+        messages.success(request, f"El post '{titulo}' fue eliminado correctamente.")
+        return super().delete(request, *args, **kwargs)
 
-    return render(request, 'posts/post_confirm_delete.html', { 'post': post })
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        user = request.user
 
+        if not (
+            user == self.object.autor
+            or user.is_staff
+            or user.is_superuser
+            or user.groups.filter(name="admin").exists()
+        ):
+            return HttpResponse("No tenés permiso para eliminar este post", status=403)
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+# @login_required
+# def delete_post(request, post_id):
+#     post = get_object_or_404(Post, id=post_id)
+
+#     if not (
+#         request.user == post.autor
+#         or request.user.is_staff
+#         or request.user.is_superuser
+#         or request.user.groups.filter(name="admin").exists()
+#     ):
+#         return HttpResponse("No tenés permiso para eliminar este post", status=403)
+
+#     if request.method == "POST":
+#         post.delete()
+#         return redirect("posts")
+
+#     return render(request, "posts/post_confirm_delete.html", {"post": post})
