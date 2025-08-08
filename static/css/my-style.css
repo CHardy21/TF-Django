@@ -24,6 +24,12 @@ body {
   border: 1px solid grey;
 }
 
+.avatar {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
 /* Hover para el botón Login */
 .btn-outline-light.login:hover {
   background-color: var(--bs-primary);

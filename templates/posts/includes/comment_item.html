@@ -1,4 +1,10 @@
 <div class="border rounded p-3 mb-3">
+              {% if user.avatar %}
+              <img src="{{ user.avatar.url }}" alt="Avatar" width="25px" height="25px" class="avatar"/>
+            {% else %}
+              <img src="/static/images/default_avatar.png" alt="Avatar" width="25px" height="25px" />
+            {% endif %}
+
     <strong>{{ comment.user.username }}</strong> comentó:
     <p class="mb-1">{{ comment.content }}</p>
     <small class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</small>
