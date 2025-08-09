@@ -4,25 +4,80 @@
   Estadísticas
 {% endblock %}
 
+{% block styles %}
+  <style>
+    .chart-container {
+      position: relative;
+      height: 400px;
+      margin-bottom: 2rem;
+    }
+    .card-stat {
+      min-width: 180px;
+    }
+  </style>
+{% endblock %}
+
 {% block main_content %}
-  <section id="estadisticas">
-    <h2>📋 Mis Estadísticas</h2>
-    <form method="get">
-      <select name="rango">
-        <option value="">Todo el historial</option>
-        <option value="mes">Este mes</option>
-        <option value="30d">Últimos 30 días</option>
-      </select>
-      <button type="submit">Aplicar filtro</button>
+  <div class="container mt-4">
+    <h2 class="fw-bold mb-4">📋 Mis Estadísticas</h2>
+
+    <form method="get" class="row g-3 mb-4">
+      <div class="col-auto">
+        <select name="rango" class="form-select">
+          <option value="">Todo el historial</option>
+          <option value="mes" {% if request.GET.rango == 'mes' %}selected{% endif %}>Este mes</option>
+          <option value="30d" {% if request.GET.rango == '30d' %}selected{% endif %}>Últimos 30 días</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">
+          <i class="bi bi-filter"></i> Aplicar filtro
+        </button>
+      </div>
     </form>
 
-    <ul>
-      <li>Total: {{ total_posts }}</li>
-      <li>Publicadas: {{ publicados }}</li>
-      <li>Borradores: {{ borradores }}</li>
-      <li>Comentarios: {{ total_comentarios }}</li>
-      <li>Promedio vistas: {{ promedio_vistas|floatformat:1 }}</li>
-    </ul>
+    <div class="row row-cols-1 row-cols-md-3 g-3 mb-5">
+      <div class="col">
+        <div class="card card-stat shadow-sm">
+          <div class="card-body text-center">
+            <h6 class="card-title text-muted">Total de publicaciones</h6>
+            <h4 class="fw-bold">{{ total_posts }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card card-stat shadow-sm">
+          <div class="card-body text-center">
+            <h6 class="card-title text-muted">Publicadas</h6>
+            <h4 class="fw-bold text-success">{{ publicados }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card card-stat shadow-sm">
+          <div class="card-body text-center">
+            <h6 class="card-title text-muted">Borradores</h6>
+            <h4 class="fw-bold text-warning">{{ borradores }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card card-stat shadow-sm">
+          <div class="card-body text-center">
+            <h6 class="card-title text-muted">Comentarios</h6>
+            <h4 class="fw-bold">{{ total_comentarios }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card card-stat shadow-sm">
+          <div class="card-body text-center">
+            <h6 class="card-title text-muted">Promedio de vistas</h6>
+            <h4 class="fw-bold text-info">{{ promedio_vistas|floatformat:1 }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="chart-container">
       <canvas id="graficoPublicaciones"></canvas>
@@ -30,66 +85,106 @@
     <div class="chart-container">
       <canvas id="graficoVistas"></canvas>
     </div>
-  </section>
 
-  <section id="top">
-    <h3>🏆 Top publicaciones</h3>
-    <ol>
+    <h3 class="mt-5 mb-3">🏆 Top publicaciones</h3>
+    <ul class="list-group">
       {% for post in top_posts %}
-        <li>{{ post.titulo }} — {{ post.vistas }} vistas</li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ post.titulo }}
+          <span class="badge bg-info text-dark">{{ post.vistas }} vistas</span>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted">No hay publicaciones destacadas.</li>
       {% endfor %}
-    </ol>
-  </section>
+    </ul>
+  </div>
 {% endblock %}
+
 {% block scripts %}
   <script src="static/js/dashboard.js"></script>
-  <script>
-    new Chart(document.getElementById('graficoPublicaciones'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Publicadas', 'Borradores'],
-        datasets: [{
-          data: [{{ publicados }}, {{ borradores }}],
-          backgroundColor: ['#28a745', '#ffc107'],
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Estado de Publicaciones'
-          }
-        }
-      }
-    });
-
-    new Chart(document.getElementById('graficoVistas'), {
-      type: 'bar',
-      data: {
-        labels: {{ labels|safe }},
-        datasets: [{
-          label: 'Vistas',
-          data: {{ views|safe }},
-          backgroundColor: '#17a2b8'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Publicaciones más vistas'
+<script>
+  new Chart(document.getElementById('graficoPublicaciones'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Publicadas', 'Borradores'],
+      datasets: [{
+        data: [{{ publicados }}, {{ borradores }}],
+        backgroundColor: ['#198754', '#ffc107'],
+        borderColor: ['#145c32', '#cc9a06'],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Estado de Publicaciones',
+          font: {
+            size: 18
           }
         },
-        scales: {
-          y: {
-            beginAtZero: true
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('graficoVistas'), {
+    type: 'bar',
+    data: {
+      labels: {{ labels|safe }},
+      datasets: [{
+        label: 'Vistas',
+        data: {{ views|safe }},
+        backgroundColor: '#0dcaf0',
+        borderColor: '#0aa2c0',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Publicaciones más vistas',
+          font: {
+            size: 18
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            title: function(tooltipItems) {
+              const index = tooltipItems[0].dataIndex;
+              const fullTitles = {{ full_titles|safe }};
+              return fullTitles[index];
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            maxRotation: 0,
+            minRotation: 0,
+            autoSkip: true,
+            maxTicksLimit: 10
+          }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
           }
         }
       }
-    });
-  </script>
+    }
+  });
+</script>
 {% endblock %}

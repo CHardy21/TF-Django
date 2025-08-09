@@ -128,6 +128,25 @@ def estadisticas_view(request):
     promedio_vistas = posts.aggregate(Avg("vistas"))["vistas__avg"] or 0
     top_posts = posts.order_by("-vistas")[:5]
 
+    # context = {
+    #     "posts": posts,
+    #     "total_posts": total_posts,
+    #     "publicados": publicados,
+    #     "borradores": borradores,
+    #     "total_comentarios": total_comentarios,
+    #     "promedio_vistas": round(promedio_vistas, 1),
+    #     "top_posts": top_posts,
+    #     "labels": [post.titulo for post in top_posts],
+    #     "views": [post.vistas for post in top_posts],
+    #     "fecha_inicio": fecha_inicio_str if fecha_inicio_str else "",
+    #     "fecha_fin": fecha_fin_str if fecha_fin_str else "",
+    #     "rango": rango or "",
+    # }
+    # Acortar títulos para el gráfico
+    labels = [post.titulo[:15] + '...' if len(post.titulo) > 15 else post.titulo for post in top_posts]
+    views = [post.vistas for post in top_posts]
+    full_titles = [post.titulo for post in top_posts]
+
     context = {
         "posts": posts,
         "total_posts": total_posts,
@@ -136,8 +155,9 @@ def estadisticas_view(request):
         "total_comentarios": total_comentarios,
         "promedio_vistas": round(promedio_vistas, 1),
         "top_posts": top_posts,
-        "labels": [post.titulo for post in top_posts],
-        "views": [post.vistas for post in top_posts],
+        "labels": labels,
+        "views": views,
+        "full_titles": full_titles,
         "fecha_inicio": fecha_inicio_str if fecha_inicio_str else "",
         "fecha_fin": fecha_fin_str if fecha_fin_str else "",
         "rango": rango or "",

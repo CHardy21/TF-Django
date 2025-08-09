@@ -1,6 +1,9 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    /*display: flex;*/
+}
+.dashboard-wrapper {
     display: flex;
 }
 
@@ -83,28 +86,23 @@ body {
 
 .main-content {
     margin-left: 240px;
-    padding: 20px;
+    padding: 30px 40px;
     flex-grow: 1;
-    transition: margin-left 0.3s ease;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
 }
 
 /* 📊 Otros componentes */
 .chart-container {
-    max-width: 400px;
-    margin: 20px auto;
+    max-width: 800px;
+    margin: 10px auto;
 }
 
 canvas {
     max-width: 100%;
     height: auto !important;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #e9ecef;
-}
-
-.table-striped tbody tr:nth-of-type(even) {
-    background-color: #dee2e6;
 }
 
 /* 📱 Responsive: solo íconos en sidebar */
@@ -115,7 +113,8 @@ canvas {
     }
 
     .main-content {
-        margin-left: 100px;
+        margin-left: 90px;
+        padding: 20px;
     }
 
     .sidebar a,
