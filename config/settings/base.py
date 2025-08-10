@@ -1,18 +1,11 @@
-import os
 from pathlib import Path
+import os
 from dotenv import load_dotenv
 
-# Cargar variables del archivo .env
 load_dotenv()
 
-# Leer la variable ENV
-env = os.getenv("ENV", "local").lower()
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# Ajustar BASE_DIR según entorno
-if env == "production":
-    BASE_DIR = Path(__file__).resolve().parent.parent.parent
-else:
-    BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Aplicaciones
 BASE_APPS = [
@@ -57,7 +50,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR.parent / "templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -84,9 +77,9 @@ USE_TZ = True
 
 # Archivos estáticos y media
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR.parent / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR.parent / "media"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Clave primaria por defecto
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

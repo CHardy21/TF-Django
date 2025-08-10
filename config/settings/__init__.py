@@ -2,7 +2,9 @@ import os
 
 env = os.getenv("ENV", "local").lower()
 
-if env == "production":
+if env == "produccion":
     from .produccion import *
-else:
+elif env == "local":
     from .local import *
+else:
+    raise ValueError(f"Entorno desconocido: {env}")

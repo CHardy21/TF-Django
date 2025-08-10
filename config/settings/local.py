@@ -10,6 +10,6 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "mydb.sqlite3",
+        "NAME": BASE_DIR / 'config' / 'mydb.sqlite3',
     }
 }
