@@ -1,18 +1,33 @@
 from .base import *
+import os
+from dotenv import load_dotenv
+import dj_database_url
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+b0m2dqye41p-#9wd8+x8#_$$*wxeae&6cc(t7p0%l3o%zftvc'
+load_dotenv()
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['chardy.pythonanywhere.com']
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'mydb.sqlite3',
-    }
+    "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+}
+
+STATIC_ROOT = BASE_DIR.parent / "staticfiles"
+
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": os.getenv("LOG_LEVEL", "INFO"),
+    },
 }

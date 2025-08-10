@@ -1,10 +1,20 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Cargar variables del archivo .env
+load_dotenv()
 
-# Application definition
+# Leer la variable ENV
+env = os.getenv("ENV", "local").lower()
+
+# Ajustar BASE_DIR según entorno
+if env == "production":
+    BASE_DIR = Path(__file__).resolve().parent.parent.parent
+else:
+    BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Aplicaciones
 BASE_APPS = [
     "jazzmin",
     "django.contrib.admin",
@@ -16,8 +26,7 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    # Mis Apps
-    "apps.core",  # app para mantener utilidades comunes a todas la apps como filtros, y mas...
+    "apps.core",
     "apps.posts",
     "apps.user",
     "apps.comments",
@@ -25,12 +34,12 @@ LOCAL_APPS = [
 ]
 
 THIRDS_APPS = [
-    # Apps de terceros
     "django_summernote",
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRDS_APPS
 
+# Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -39,7 +48,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # Mis middleware...
     "apps.core.middleware.access_control.SoloColaboradoresMiddleware",
     "apps.core.middleware.access_control.OcultarAdminMiddleware",
 ]
@@ -49,7 +57,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(os.path.dirname(BASE_DIR), "templates")],
+        "DIRS": [BASE_DIR.parent / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -63,59 +71,37 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
+# Usuario personalizado
+AUTH_USER_MODEL = "user.User"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
-AUTH_USER_MODEL = "user.User"
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
+# Internacionalización
 LANGUAGE_CODE = "es-ar"
-
 TIME_ZONE = "America/Argentina/Buenos_Aires"
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
+# Archivos estáticos y media
 STATIC_URL = "static/"
-STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR), "static"),)
-
+STATICFILES_DIRS = [BASE_DIR.parent / "static"]
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
+MEDIA_ROOT = BASE_DIR.parent / "media"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
+# Clave primaria por defecto
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Validadores de contraseña
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
 
+# Configuración de Summernote
 SUMMERNOTE_CONFIG = {
-    "iframe": True,  # Usar iframe (modo por defecto)
+    "iframe": True,
     "summernote": {
         "toolbar": [
             ["style", ["style"]],
@@ -125,15 +111,14 @@ SUMMERNOTE_CONFIG = {
             ["insert", ["link", "picture", "video"]],
             ["view", ["fullscreen", "codeview", "help"]],
         ],
-        "lang": "es-ES",  # Idioma del editor
+        "lang": "es-ES",
     },
     "attachment_require_authentication": True,
     "disable_attachment": False,
 }
-
 SUMMERNOTE_THEME = "bs5"
 
-# Panel de Control
+# Configuración de Jazzmin
 JAZZMIN_SETTINGS = {
     "site_title": "Panel de Info2025",
     "site_header": "Administración",
@@ -142,11 +127,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "CHardy Dev",
     "user_avatar": None,
     "topmenu_links": [
-        {
-            "name": "Ver sitio",
-            "url": "/",  # Ruta principal del sitio
-            "new_window": True,  # Abre en nueva pestaña
-        },
+        {"name": "Ver sitio", "url": "/", "new_window": True},
         {"name": "Inicio", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"model": "user.User"},
         {"model": "auth.Group"},
@@ -157,40 +138,13 @@ JAZZMIN_SETTINGS = {
         "post.Post": "fas fa-newspaper",
         "categoria.Categoria": "fas fa-tags",
     },
-    # "order_with_respect_to": [
-    #     "user.User",
-    #     "auth.Group",
-    # ],
-    "hide_apps": [
-        "auth",
-        "django_summernote",
-        "post",
-        "categoria",
-    ],
+    "hide_apps": ["auth", "django_summernote", "post", "categoria"],
     "custom_links": {
-        "user": [
-            {
-                "name": "Grupos",
-                "url": "admin:auth_group_changelist",
-                "icon": "fas fa-users",
-            }
-        ],
+        "user": [{"name": "Grupos", "url": "admin:auth_group_changelist", "icon": "fas fa-users"}],
         "post": [
-            {
-                "name": "Comentarios",
-                "url": "admin:comments_comments_changelist",
-                "icon": "fas fa-comments",
-            },
-            {
-                "name": "Posts",
-                "url": "admin:post_post_changelist",
-                "icon": "fas fa-newspaper",
-            },
-            {
-                "name": "Categorías",
-                "url": "admin:categoria_categoria_changelist",
-                "icon": "fas fa-tags",
-            },
+            {"name": "Comentarios", "url": "admin:comments_comments_changelist", "icon": "fas fa-comments"},
+            {"name": "Posts", "url": "admin:post_post_changelist", "icon": "fas fa-newspaper"},
+            {"name": "Categorías", "url": "admin:categoria_categoria_changelist", "icon": "fas fa-tags"},
         ],
     },
     "show_sidebar": True,
