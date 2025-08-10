@@ -41,17 +41,29 @@
 
     <form method="get" class="d-flex flex-wrap gap-3 mb-4">
       <div>
-        <label for="start_date" class="form-label">Desde</label>
-        <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+        <label for="fecha_inicio" class="form-label">Desde</label>
+        <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" value="{{ fecha_inicio }}">
       </div>
       <div>
-        <label for="end_date" class="form-label">Hasta</label>
-        <input type="date" id="end_date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+        <label for="fecha_fin" class="form-label">Hasta</label>
+        <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" value="{{ fecha_fin }}">
       </div>
-      <div class="align-self-end">
+      <div>
+        <label for="rango" class="form-label">Rango rápido</label>
+        <select name="rango" id="rango" class="form-select">
+          <option value="">-- Seleccionar --</option>
+          <option value="7d" {% if rango == "7d" %}selected{% endif %}>Últimos 7 días</option>
+          <option value="30d" {% if rango == "30d" %}selected{% endif %}>Últimos 30 días</option>
+          <option value="mes" {% if rango == "mes" %}selected{% endif %}>Este mes</option>
+        </select>
+      </div>
+      <div class="align-self-end d-flex gap-2">
         <button type="submit" class="btn btn-outline-secondary">
           <i class="bi bi-filter me-1"></i> Filtrar
         </button>
+        <a href="{% url 'dashboard:dashboard_publicaciones' %}" class="btn btn-outline-danger">
+          <i class="bi bi-x-circle me-1"></i> Limpiar
+        </a>
       </div>
     </form>
 
@@ -67,24 +79,24 @@
         <tbody>
           {% for post in posts %}
             <tr class="py-3">
-<td>
-  <a href="{% url 'show_post' post.id %}" class="text-decoration-none text-dark fw-semibold">
-    {{ post.titulo }}
-  </a>
-  <div class="text-muted small mt-1">
-    <i class="bi bi-eye"></i> {{ post.vistas }} vistas &nbsp;•&nbsp;
-    <i class="bi bi-chat-dots"></i> {{ post.comentarios.count }} comentarios
-  </div>
-</td>
+              <td>
+                <a href="{% url 'show_post' post.id %}" class="text-decoration-none text-dark fw-semibold">
+                  {{ post.titulo }}
+                </a>
+                <div class="text-muted small mt-1">
+                  <i class="bi bi-eye"></i> {{ post.vistas }} vistas &nbsp;•&nbsp;
+                  <i class="bi bi-chat-dots"></i> {{ post.comentarios.count }} comentarios
+                </div>
+              </td>
               <td>{{ post.fecha|date:'d/m/Y' }}</td>
-<td class="text-end">
-  <a href="{% url 'edit_post' post.id %}" class="btn btn-sm btn-primary btn-icon me-2" aria-label="Editar publicación" title="Editar">
-    <i class="bi bi-pencil-square"></i>
-  </a>
-  <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-danger btn-icon" aria-label="Eliminar publicación" title="Eliminar">
-    <i class="bi bi-trash"></i>
-  </a>
-</td>
+              <td class="text-end">
+                <a href="{% url 'edit_post' post.id %}" class="btn btn-sm btn-primary btn-icon me-2" aria-label="Editar publicación" title="Editar">
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+                <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-danger btn-icon" aria-label="Eliminar publicación" title="Eliminar">
+                  <i class="bi bi-trash"></i>
+                </a>
+              </td>
             </tr>
           {% empty %}
             <tr>
@@ -100,7 +112,7 @@
         <ul class="pagination justify-content-center">
           {% if posts.has_previous %}
             <li class="page-item">
-              <a class="page-link" href="?page={{ posts.previous_page_number }}&start_date={{ request.GET.start_date }}&end_date={{ request.GET.end_date }}" aria-label="Página anterior">
+              <a class="page-link" href="?page={{ posts.previous_page_number }}&fecha_inicio={{ fecha_inicio }}&fecha_fin={{ fecha_fin }}&rango={{ rango }}" aria-label="Página anterior">
                 &laquo;
               </a>
             </li>
@@ -112,13 +124,13 @@
 
           {% for num in posts.paginator.page_range %}
             <li class="page-item {% if posts.number == num %}active{% endif %}">
-              <a class="page-link" href="?page={{ num }}&start_date={{ request.GET.start_date }}&end_date={{ request.GET.end_date }}">{{ num }}</a>
+              <a class="page-link" href="?page={{ num }}&fecha_inicio={{ fecha_inicio }}&fecha_fin={{ fecha_fin }}&rango={{ rango }}">{{ num }}</a>
             </li>
           {% endfor %}
 
           {% if posts.has_next %}
             <li class="page-item">
-              <a class="page-link" href="?page={{ posts.next_page_number }}&start_date={{ request.GET.start_date }}&end_date={{ request.GET.end_date }}" aria-label="Página siguiente">
+              <a class="page-link" href="?page={{ posts.next_page_number }}&fecha_inicio={{ fecha_inicio }}&fecha_fin={{ fecha_fin }}&rango={{ rango }}" aria-label="Página siguiente">
                 &raquo;
               </a>
             </li>

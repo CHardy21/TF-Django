@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.utils.dateparse import parse_date
 from django.utils import timezone
@@ -82,10 +83,47 @@ def exportar_estadisticas_csv(request):
 
 @login_required
 def publicaciones_view(request):
-
     posts = Post.objects.filter(autor=request.user)
-    return render(request, "dashboard_publicaciones.html", {"posts": posts})
 
+    # Parámetros GET
+    fecha_inicio_str = request.GET.get("fecha_inicio")
+    fecha_fin_str = request.GET.get("fecha_fin")
+    rango = request.GET.get("rango")  # '7d', '30d', 'mes'
+
+    hoy = timezone.now().date()
+    fecha_inicio = parse_date(fecha_inicio_str) if fecha_inicio_str else None
+    fecha_fin = parse_date(fecha_fin_str) if fecha_fin_str else None
+
+    # Aplicar rango si está definido
+    if rango == "7d":
+        fecha_inicio = hoy - timedelta(days=7)
+        fecha_fin = hoy
+    elif rango == "30d":
+        fecha_inicio = hoy - timedelta(days=30)
+        fecha_fin = hoy
+    elif rango == "mes":
+        fecha_inicio = hoy.replace(day=1)
+        fecha_fin = hoy
+
+    # Validar fechas manuales
+    if fecha_inicio and fecha_fin:
+        if fecha_inicio > fecha_fin:
+            fecha_inicio, fecha_fin = fecha_fin, fecha_inicio
+        posts = posts.filter(fecha__date__range=(fecha_inicio, fecha_fin))
+
+    # Paginación
+    paginator = Paginator(posts.order_by("-fecha"), 10)
+    page_number = request.GET.get("page")
+    posts_page = paginator.get_page(page_number)
+
+    context = {
+        "posts": posts_page,
+        "fecha_inicio": fecha_inicio_str or "",
+        "fecha_fin": fecha_fin_str or "",
+        "rango": rango or "",
+    }
+
+    return render(request, "dashboard_publicaciones.html", context)
 
 @login_required
 def estadisticas_view(request):
@@ -128,20 +166,6 @@ def estadisticas_view(request):
     promedio_vistas = posts.aggregate(Avg("vistas"))["vistas__avg"] or 0
     top_posts = posts.order_by("-vistas")[:5]
 
-    # context = {
-    #     "posts": posts,
-    #     "total_posts": total_posts,
-    #     "publicados": publicados,
-    #     "borradores": borradores,
-    #     "total_comentarios": total_comentarios,
-    #     "promedio_vistas": round(promedio_vistas, 1),
-    #     "top_posts": top_posts,
-    #     "labels": [post.titulo for post in top_posts],
-    #     "views": [post.vistas for post in top_posts],
-    #     "fecha_inicio": fecha_inicio_str if fecha_inicio_str else "",
-    #     "fecha_fin": fecha_fin_str if fecha_fin_str else "",
-    #     "rango": rango or "",
-    # }
     # Acortar títulos para el gráfico
     labels = [post.titulo[:15] + '...' if len(post.titulo) > 15 else post.titulo for post in top_posts]
     views = [post.vistas for post in top_posts]
