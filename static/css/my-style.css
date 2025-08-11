@@ -9,6 +9,13 @@ body {
   margin: 0;
 }
 
+hr.hr-red {
+  border: none;
+  border-top: 3px solid #bb1919 !important;
+  opacity: 1 !important;
+  overflow: hidden;
+}
+
 .top-user-bar {
   height: 40px;
   font-size: 0.9rem;
@@ -319,6 +326,10 @@ img.rounded-circle {
   height: 40px;
 }
 
+.blockspare-social-icons i {
+  font-size: 1.5rem;
+  /* Ajustá el tamaño según tu preferencia */
+}
 
 a.bs-social-facebook {
   background-color: #3b5999;
@@ -334,4 +345,8 @@ a.bs-social-instagram {
 
 a.bs-social-youtube {
   background-color: #cd201f;
+}
+
+a.bs-social-github {
+  background-color: #333333;
 }
