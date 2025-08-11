@@ -2,7 +2,7 @@
 
 /* --- FORMULARIO ESTILIZADO UNIVERSAL --- */
 
-.form-container {
+.form-custom-css .form-container {
     background-color: #f8f9fa;
     padding: 1.5rem;
     border-radius: 10px;
@@ -11,12 +11,12 @@
     margin: 0 auto;
 }
 
-.form-label {
+.form-custom-css .form-label {
     font-weight: 600;
     color: #343a40;
 }
 
-.form-field {
+.form-custom-css .form-field {
     border: 1px solid #ced4da;
     border-radius: 5px;
     padding: 0.5rem 0.75rem;
@@ -24,19 +24,19 @@
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-field:focus {
+.form-custom-css .form-field:focus {
     border-color: #0d6efd;
     box-shadow: 0 0 5px rgba(13, 110, 253, 0.4);
     outline: none;
 }
 
-.form-text {
+.form-custom-css .form-text {
     font-size: 0.875rem;
     color: #6c757d;
 }
 
 /* Botones responsivos */
-.form-actions {
+.form-custom-css .form-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
@@ -44,12 +44,12 @@
     margin-top: 2rem;
 }
 
-.btn {
+.form-custom-css .btn {
     min-width: 120px;
 }
 
 /* 🌞 Estilos generales para Summernote */
-.summernote-wrapper .note-editor {
+.form-custom-css .summernote-wrapper .note-editor {
     max-width: 100% !important;
     max-height: 300px !important;
     overflow-x: hidden !important;
@@ -61,27 +61,27 @@
 }
 
 /* 🧼 Scroll estilizado para navegadores WebKit */
-.summernote-wrapper .note-editor::-webkit-scrollbar {
+.form-custom-css .summernote-wrapper .note-editor::-webkit-scrollbar {
     width: 8px;
 }
 
-.summernote-wrapper .note-editor::-webkit-scrollbar-track {
+.form-custom-css .summernote-wrapper .note-editor::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-.summernote-wrapper .note-editor::-webkit-scrollbar-thumb {
+.form-custom-css .summernote-wrapper .note-editor::-webkit-scrollbar-thumb {
     background: #aaa;
     border-radius: 4px;
 }
 
 /* 🎯 Mejora del foco visual */
-.summernote-wrapper .note-editor:focus-within {
+.form-custom-css .summernote-wrapper .note-editor:focus-within {
     border-color: #86b7fe;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
 }
 
 /* ✒️ Área editable dentro del editor */
-.summernote-wrapper .note-editable {
+.form-custom-css .summernote-wrapper .note-editable {
     overflow-x: auto !important;
     word-wrap: break-word !important;
     white-space: pre-wrap !important;
@@ -92,7 +92,7 @@
 
 /* 📱 Responsividad para pantallas pequeñas */
 @media (max-width: 768px) {
-    .summernote-wrapper .note-editor {
+    .form-custom-css .summernote-wrapper .note-editor {
         font-size: clamp(13px, 2vw, 14px);
     }
 }
