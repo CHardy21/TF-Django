@@ -13,10 +13,16 @@
       {% csrf_token %}
       {{ form.as_p }}
 
+
       <div class="d-flex justify-content-between mt-4">
         <a href="{% url 'posts' %}" class="btn btn-outline-secondary">Cancelar</a>
         <button type="submit" class="btn btn-primary">Publicar</button>
       </div>
     </form>
   </div>
+{% endblock %}
+
+{% block extra_js %}
+  {{ form.media }}
+  <script src="{% static 'js/preview_imagen.js' %}"></script>
 {% endblock %}

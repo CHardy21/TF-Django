@@ -21,7 +21,7 @@ class Post(models.Model):
     )
     resumen = SummernoteTextField(max_length=1000, null=False, blank=True)
     contenido = SummernoteTextField(
-        null=False, verbose_name="Escriba aqui el contenido"
+        null=False, verbose_name="Escriba aquí el contenido"
     )
     fecha = models.DateTimeField(auto_now_add=True)
     activo = models.BooleanField(default=True)

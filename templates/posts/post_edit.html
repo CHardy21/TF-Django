@@ -21,3 +21,7 @@
     </form>
   </div>
 {% endblock %}
+{% block extra_js %}
+  {{ form.media }}
+  <script src="{% static 'js/preview_imagen.js' %}"></script>
+{% endblock %}
