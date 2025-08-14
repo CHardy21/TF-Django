@@ -2,6 +2,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
+from django import forms
+from apps.core.widgets import AdminAvatarWidget 
+#from .models import User
 
 User = get_user_model()
 
@@ -61,3 +64,28 @@ class EditProfileForm(forms.ModelForm):
             'avatar': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
+
+class CustomUserForm(forms.ModelForm):
+    delete_avatar = forms.BooleanField(required=False, widget=forms.HiddenInput())
+
+    class Meta:
+        model = User
+        fields = '__all__'
+        widgets = {
+            'avatar': AdminAvatarWidget,
+        }
+
+    def clean_delete_avatar(self):
+        return self.data.get('delete_avatar') in ['1', 'true']
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+
+        if self.cleaned_data.get('delete_avatar'):
+            if instance.avatar:
+                instance.avatar.delete(save=False)
+            instance.avatar = None  # Esto activa avatar_url con el default
+
+        if commit:
+            instance.save()
+        return instance

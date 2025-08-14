@@ -1,0 +1,77 @@
+{% load static %}
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+  <div style="position: relative;">
+    <img id="avatar-preview"
+         src="{% if widget.value %}{{ widget.value.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}"
+         style="
+           width: 160px;
+           height: 160px;
+           object-fit: cover;
+           border-radius: 50%;
+           box-shadow: 0 0 5px rgba(0,0,0,0.2);
+         "
+    />
+  </div>
+
+  <div style="display: flex; gap: 10px; margin-top: 10px;">
+    <label for="{{ widget.attrs.id }}" style="
+        background-color: #007bff;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    ">
+      Cambiar avatar
+    </label>
+
+    {% if widget.value %}
+    {% comment %} <button type="button" onclick="removeAvatar()" style="
+        background-color: #dc3545;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        border: none;
+    ">
+      Eliminar avatar
+    </button>  {% endcomment %}
+    {% endif %}
+  </div>
+
+  <input type="{{ widget.type }}"
+         name="{{ widget.name }}"
+         id="{{ widget.attrs.id }}"
+         style="display: none;"
+         accept="image/*"
+         onchange="previewAvatar(this)"
+  >
+
+  <input type="hidden" name="delete_avatar" id="delete-avatar-flag" value="0">
+</div>
+
+<script>
+  function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('avatar-preview').src = e.target.result;
+        document.getElementById('delete-avatar-flag').value = "0";
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function removeAvatar() {
+    document.getElementById('avatar-preview').src = "{% static 'images/default_avatar.png' %}";
+    document.getElementById('delete-avatar-flag').value = "1";
+
+    // Limpiar input de archivo
+    const oldInput = document.getElementById('{{ widget.attrs.id }}');
+    const newInput = oldInput.cloneNode();
+    newInput.value = none;
+    oldInput.parentNode.replaceChild(newInput, oldInput);
+  }
+</script>
