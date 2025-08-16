@@ -1,50 +1,30 @@
 {% load static %}
 
-<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-  <div style="position: relative;">
+<div class="d-flex flex-column align-items-center gap-3">
+  <div class="position-relative">
     <img id="avatar-preview"
          src="{% if widget.value %}{{ widget.value.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}"
-         style="
-           width: 160px;
-           height: 160px;
-           object-fit: cover;
-           border-radius: 50%;
-           box-shadow: 0 0 5px rgba(0,0,0,0.2);
-         "
+         class="rounded-circle shadow-sm border"
+         style="width: 160px; height: 160px; object-fit: cover;"
     />
   </div>
 
-  <div style="display: flex; gap: 10px; margin-top: 10px;">
-    <label for="{{ widget.attrs.id }}" style="
-        background-color: #007bff;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-    ">
+  <div class="d-flex gap-2">
+    <label for="{{ widget.attrs.id }}" class="btn btn-primary fw-bold">
       Cambiar avatar
     </label>
 
     {% if widget.value %}
-    {% comment %} <button type="button" onclick="removeAvatar()" style="
-        background-color: #dc3545;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        border: none;
-    ">
+    <button type="button" onclick="removeAvatar()" class="btn btn-danger fw-bold">
       Eliminar avatar
-    </button>  {% endcomment %}
+    </button>
     {% endif %}
   </div>
 
   <input type="{{ widget.type }}"
          name="{{ widget.name }}"
          id="{{ widget.attrs.id }}"
-         style="display: none;"
+         class="d-none"
          accept="image/*"
          onchange="previewAvatar(this)"
   >
@@ -69,9 +49,7 @@
     document.getElementById('delete-avatar-flag').value = "1";
 
     // Limpiar input de archivo
-    const oldInput = document.getElementById('{{ widget.attrs.id }}');
-    const newInput = oldInput.cloneNode();
-    newInput.value = none;
-    oldInput.parentNode.replaceChild(newInput, oldInput);
+    const input = document.getElementById('{{ widget.attrs.id }}');
+    input.value = '';
   }
 </script>

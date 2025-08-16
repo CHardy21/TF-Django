@@ -19,7 +19,7 @@ class User(AbstractUser):
     def avatar_url(self):
         if self.avatar:
             return self.avatar.url
-        return static('images/default_avatar.png')  # Ruta relativa a static/
+        return static('images/default_avatar.png')
 
     class Meta:
         verbose_name_plural = "Usuarios"

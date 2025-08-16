@@ -70,6 +70,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+docs/
 
 # PyBuilder
 .pybuilder/
@@ -240,3 +241,6 @@ pytest_cache/         # Pytest cache
 # 🧰 Django static & media (if collected locally)
 staticfiles/          # Collected static files
 mediafiles/           # Collected media files
+
+# Document of project
+docs/

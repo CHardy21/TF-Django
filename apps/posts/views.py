@@ -4,7 +4,6 @@ from django.views.generic.edit import UpdateView, CreateView
 from django.views.generic import DeleteView
 from django.contrib import messages
 
-# from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -137,22 +136,6 @@ def search_posts(request):
     )
 
 
-# ------------------------
-# @login_required
-# def create_post(request):
-#     if request.method == "POST":
-#         form = PostForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             post = form.save(commit=False)
-#             post.autor = request.user
-#             post.save()
-#             return redirect("show_post", post_id=post.id)
-#     else:
-#         form = PostForm()
-
-#     return render(request, "posts/post_create.html", {"form": form})
-
-
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -196,8 +179,6 @@ class EditPostView(LoginRequiredMixin, UpdateView):
         self.reemplazar_imagen(post)
         return super().form_valid(form)
 
-    # def get_success_url(self):
-    #     return redirect('show_post', pk=self.object.pk).url
     def get_success_url(self):
         return reverse("show_post", kwargs={"post_id": self.object.pk})
 
@@ -227,21 +208,3 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
 
         return super().dispatch(request, *args, **kwargs)
 
-
-# @login_required
-# def delete_post(request, post_id):
-#     post = get_object_or_404(Post, id=post_id)
-
-#     if not (
-#         request.user == post.autor
-#         or request.user.is_staff
-#         or request.user.is_superuser
-#         or request.user.groups.filter(name="admin").exists()
-#     ):
-#         return HttpResponse("No tenés permiso para eliminar este post", status=403)
-
-#     if request.method == "POST":
-#         post.delete()
-#         return redirect("posts")
-
-#     return render(request, "posts/post_confirm_delete.html", {"post": post})

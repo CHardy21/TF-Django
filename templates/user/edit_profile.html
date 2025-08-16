@@ -7,11 +7,7 @@
     <div class="card shadow-sm p-4 w-100" style="max-width: 500px;">
       <h4 class="text-center mb-4 text-primary"><i class="bi bi-pencil-square me-2"></i>Editar Perfil</h4>
 
-      {% if user.avatar %}
-        <div class="text-center mb-3">
-          <img src="{{ user.avatar.url }}" alt="Avatar actual" class="img-fluid rounded-circle border" style="width: 120px; height: 120px; object-fit: cover;" />
-        </div>
-      {% endif %}
+
 
       <h5 class="text-center fw-bold mb-4">{{ user.username }}</h5>
 
@@ -34,6 +30,7 @@
 
       <form method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
+        {{ form.media }}
         {% for field in form %}
           <div class="mb-3">
             {{ field.label_tag }}

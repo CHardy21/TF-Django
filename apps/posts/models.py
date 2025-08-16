@@ -5,7 +5,6 @@ from django.utils import timezone
 from django_summernote.fields import SummernoteTextField
 
 
-# Categorias
 class Categoria(models.Model):
     nombre = models.CharField(max_length=30, null=False)
     descripcion = models.TextField(null=True, blank=True)

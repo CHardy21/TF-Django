@@ -1,3 +1,4 @@
+# apps/posts/form.py
 from django import forms
 from .models import Post
 from django_summernote.widgets import SummernoteWidget

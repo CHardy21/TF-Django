@@ -1,3 +1,4 @@
+# apps/user/admin.py
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
@@ -5,14 +6,12 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
 from .models import User
 from django import forms
-from apps.core.widgets import AdminAvatarWidget  # Ajustá el import según tu estructura
+from apps.core.widgets import AdminAvatarWidget
 
 # Reconfigurar el nombre del modelo Group
 admin.site.unregister(Group)
 Group._meta.verbose_name_plural = "Grupos"
 admin.site.register(Group)
-
-# Personalizar el panel de administración para User
 
 class UserAdminForm(forms.ModelForm):
     class Meta:

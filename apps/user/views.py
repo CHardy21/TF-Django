@@ -39,3 +39,13 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
     
+    def form_valid(self, form):
+        delete_flag = self.request.POST.get('delete_avatar')
+        if delete_flag == '1':
+            user = form.instance
+            if user.avatar:
+                user.avatar.delete(save=False)
+                user.avatar = None
+        return super().form_valid(form)
+
+    
