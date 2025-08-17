@@ -13,7 +13,7 @@ DATABASES = {
     "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
-STATIC_ROOT = BASE_DIR.parent / "staticfiles"
+STATIC_ROOT = BASE_DIR.parent.parent / "staticfiles"
 
 
 SECURE_SSL_REDIRECT = True

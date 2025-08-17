@@ -1,25 +1,55 @@
-{% if widget.value %}
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-    <div style="position: relative;">
-      <img src="{{ widget.value.url }}" style="
-          width: 160px;
-          height: 160px;
-          object-fit: cover;
-          border-radius: 50%;
-          box-shadow: 0 0 5px rgba(0,0,0,0.2);
-      " />
-      <div style="
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          background: #fff;
-          border-radius: 50%;
-          padding: 5px;
-          box-shadow: 0 0 3px rgba(0,0,0,0.3);
-      ">
-        🖼️
-      </div>
-    </div>
+{% load static %}
+
+<div class="d-flex flex-column align-items-center gap-3">
+  <div class="position-relative">
+    <img id="avatar-preview"
+         src="{% if widget.value %}{{ widget.value.url }}{% else %}{% static 'images/default_avatar.png' %}{% endif %}"
+         class="rounded-circle shadow-sm border"
+         style="width: 160px; height: 160px; object-fit: cover;"
+    />
   </div>
-{% endif %}
-{{ widget.subwidgets.0 }}
+
+  <div class="d-flex gap-2">
+    <label for="{{ widget.attrs.id }}" class="btn btn-primary fw-bold">
+      Cambiar avatar
+    </label>
+
+    {% if widget.value %}
+    <button type="button" onclick="removeAvatar()" class="btn btn-danger fw-bold">
+      Eliminar avatar
+    </button>
+    {% endif %}
+  </div>
+
+  <input type="{{ widget.type }}"
+         name="{{ widget.name }}"
+         id="{{ widget.attrs.id }}"
+         class="d-none"
+         accept="image/*"
+         onchange="previewAvatar(this)"
+  >
+
+  <input type="hidden" name="delete_avatar" id="delete-avatar-flag" value="0">
+</div>
+
+<script>
+  function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('avatar-preview').src = e.target.result;
+        document.getElementById('delete-avatar-flag').value = "0";
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function removeAvatar() {
+    document.getElementById('avatar-preview').src = "{% static 'images/default_avatar.png' %}";
+    document.getElementById('delete-avatar-flag').value = "1";
+
+    // Limpiar input de archivo
+    const input = document.getElementById('{{ widget.attrs.id }}');
+    input.value = '';
+  }
+</script>
